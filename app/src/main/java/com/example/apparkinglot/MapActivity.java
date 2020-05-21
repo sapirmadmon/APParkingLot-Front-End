@@ -6,10 +6,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -18,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,7 +41,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+
+
+ //        mapFragment = (SupportMapFragment) getSupportFragmentManager()
 //                .findFragmentById(R.id.mapAPI);
 //
 //        mapFragment.getMapAsync(this);
@@ -60,6 +66,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     currentLocation = location;
                     Toast.makeText(getApplicationContext(), currentLocation.getLatitude()
                     +""+currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+
+                    findViewById(R.id.bottomAction1).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("CURRENT_LOCATION","**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
+                        }
+                    });
+
                     SupportMapFragment supportMapFragment = (SupportMapFragment)getSupportFragmentManager()
                             .findFragmentById(R.id.mapAPI);
                     supportMapFragment.getMapAsync(MapActivity.this);
@@ -73,7 +87,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mapAPI = googleMap;
 
         LatLng afekaCollege = new LatLng(32.114892, 34.818029);
-        mapAPI.addMarker(new MarkerOptions().position(afekaCollege).title("afeka"));
+        mapAPI.addMarker(new MarkerOptions().position(afekaCollege).title("afeka").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         mapAPI.moveCamera(CameraUpdateFactory.newLatLng(afekaCollege));
 
         LatLng school = new LatLng(32.116430, 34.818353);
@@ -81,6 +95,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mapAPI.moveCamera(CameraUpdateFactory.newLatLng(school));
 
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
         MarkerOptions markerOptions = new MarkerOptions().position(latLng)
                 .title("I'm here!");
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));

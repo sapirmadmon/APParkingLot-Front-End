@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="-200dp"
+    android:paddingTop="20dp"
+    tools:context=".ManagerBarFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/buttonGetAllElements"
+            android:layout_width="96dp"
+            android:paddingLeft="5dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:text="get all elements" />
+
+        <Button
+            android:id="@+id/buttonGetSpecificElement"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:text="get specific element" />
+
+        <Button
+            android:id="@+id/buttonUpdateDetailsManager"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:text="update details" />
+
+        <Button
+            android:id="@+id/buttonSearchElement"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:layout_gravity="center"
+            android:text="Search Element" />
+
+    </LinearLayout>
+
+</FrameLayout>
