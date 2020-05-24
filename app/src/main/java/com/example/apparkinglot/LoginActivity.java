@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 CreateUserFragment fragment = new CreateUserFragment();
 
-                fm.beginTransaction().replace(R.id.container , fragment).commit();
+                fm.beginTransaction().add(R.id.container , fragment).commit();
 
 //                getSupportFragmentManager().beginTransaction()
 //                        .add(R.id.createUser_fragment_container, createUserFragment)

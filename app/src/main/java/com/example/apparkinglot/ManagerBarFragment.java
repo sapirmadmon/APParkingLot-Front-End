@@ -1,5 +1,6 @@
 package com.example.apparkinglot;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -26,4 +27,6 @@ public class ManagerBarFragment extends Fragment {
      //   return inflater.inflate(R.layout.fragment_manager_bar, container, false);
         return null;
     }
+
+
 }

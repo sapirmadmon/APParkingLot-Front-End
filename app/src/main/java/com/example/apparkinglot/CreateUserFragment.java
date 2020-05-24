@@ -69,25 +69,26 @@ public class CreateUserFragment extends Fragment {
 
          View view = inflater.inflate(R.layout.fragment_create_user, container, false);
 
-        Button b = (Button) view.findViewById(R.id.bottomCreateUser);
+    Button b = (Button) view.findViewById(R.id.bottomCreateUser);
 
         b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("BUTTON", "createUser BUTTON PRESSED");
+        @Override
+        public void onClick(View v) {
 
-                //TODO postURL of create user
+            //TODO postURL of create user
 
-                // if (CreateUserFragment.this.mListener != null) {
+            getFragmentManager().beginTransaction().remove(CreateUserFragment.this).commit(); //exit from the fragment
+
+            // if (CreateUserFragment.this.mListener != null) {
 //                     CreateUserFragment.this.mListener.viewAnimationRequested();
 
-//                //}
+//                }
 //
-            }
+        }
 
-        });
+    });
         return view;
-    }
+}
 
 //    @Override
 //    public void onAttach(Context context) {
