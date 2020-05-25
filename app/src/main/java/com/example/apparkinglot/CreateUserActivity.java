@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.apparkinglot.logic.Boundaries.User.NewUserDetailsBoundary;
 import com.example.apparkinglot.logic.Boundaries.User.UserBoundary;
 import com.example.apparkinglot.logic.Boundaries.User.UserRole;
 import com.example.apparkinglot.logic.JsonPlaceHolderApi;
@@ -19,21 +20,22 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginActivity extends AppCompatActivity {
+public class CreateUserActivity extends AppCompatActivity {
 
-    CreateUserFragment createUserFragment = new CreateUserFragment();
-    private EditText email;
-    private EditText domain;
+    private TextView textViewResult;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
-    private TextView result;
+
+    private EditText email;
+    private EditText username;
+    private EditText avatar;
+    private EditText role;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_create_user);
 
-        result = findViewById(R.id.textViewRes);
-        email = findViewById(R.id.editTextEmail);
-        domain =findViewById(R.id.editTextDomain);
+        textViewResult = findViewById(R.id.textView);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.1.129:8092/acs/")
@@ -41,39 +43,50 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-
-        findViewById(R.id.buttonLogin).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bottomCreateUser).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login(domain.getText().toString(), email.getText().toString());
+                createUser();
 
-             //  Intent intent = new Intent(LoginActivity.this, VolleyTutorialActivity.class);
-             //   startActivity(intent);
-            }
-        });
-
-        findViewById(R.id.buttonSignUp).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, CreateUserActivity.class);
+                Intent intent = new Intent(CreateUserActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    private void login(String toString, String toString1) {
 
 
-        Call<UserBoundary> call = jsonPlaceHolderApi.Login(domain.getText().toString(), email.getText().toString());
-        Log.d("ERROR", email.getText().toString() + "********" + domain.getText().toString());
+    private void createUser() {
+
+        email = findViewById(R.id.editTextEmail);
+        username = findViewById(R.id.editTextUserName);
+        role = findViewById(R.id.editTextRole);
+        avatar = findViewById(R.id.editTextAvatar);
+        UserRole userRole = UserRole.ADMIN;
+
+        if(role.getText().toString().equals(UserRole.PLAYER.name()))
+            userRole = UserRole.PLAYER;
+        if(role.getText().toString().equals(UserRole.ADMIN.name()))
+            userRole = UserRole.ADMIN;
+        if(role.getText().toString().equals(UserRole.MANAGER.name()))
+            userRole = UserRole.MANAGER;
+        //TODO exception if null
+        //if(role.equals(null))
+        //
+
+        // NewUserDetailsBoundary newUser = new NewUserDetailsBoundary("email@gmail.com", UserRole.PLAYER, "username","avatar");
+        NewUserDetailsBoundary newUser = new NewUserDetailsBoundary(email.getText().toString(), userRole, username.getText().toString() ,avatar.getText().toString());
+
+        Log.d("ERROR", email.getText().toString() +"*****" + userRole +"****"+ username.getText().toString() + "****" + avatar.getText().toString());
+
+        Call<UserBoundary> call = jsonPlaceHolderApi.CreateNewUser(newUser);
 
         call.enqueue(new Callback<UserBoundary>() {
             @Override
             public void onResponse(Call<UserBoundary> call, Response<UserBoundary> response) {
 
                 if(!response.isSuccessful()) {
-                    result.setText("code: "+ response.code() + " " + response.message());
-
+                    textViewResult.setText("code: "+ response.code());
                     return;
                 }
 
@@ -86,26 +99,13 @@ public class LoginActivity extends AppCompatActivity {
                 content += "user name: " + UserBoundaryResponse.getUsername() + "\n";
                 content += "avatar: " + UserBoundaryResponse.getAvatar() + "\n";
 
-                Log.d("ERROR", content);
-
-                result.setText(content);
-
-                if(UserBoundaryResponse.getRole().equals(UserRole.PLAYER)) {
-                    Intent intent = new Intent(LoginActivity.this, MapActivity.class);
-                    startActivity(intent);
-                }
-                else {
-                    Intent intent = new Intent(LoginActivity.this, ActionsAdminManagerActivity.class);
-                    startActivity(intent);
-                }
+                textViewResult.setText(content);
             }
 
             @Override
             public void onFailure(Call<UserBoundary> call, Throwable t) {
-                result.setText(t.getMessage());
-                Log.d("RR", "********************************&&&#$");
+                textViewResult.setText(t.getMessage());
             }
         });
     }
 }
-

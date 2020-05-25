@@ -82,7 +82,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/editTextEmail"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -91,7 +91,7 @@
             android:text="enter email" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/editTextDomain"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -110,6 +110,18 @@
             android:text="login"
             tools:layout_editor_absoluteX="148dp"
             tools:layout_editor_absoluteY="350dp" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textViewRes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"/>
+
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 
