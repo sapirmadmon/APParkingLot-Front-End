@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         domain =findViewById(R.id.editTextDomain);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.129:8092/acs/")
+                .baseUrl("http://192.168.43.218:8092/acs/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);

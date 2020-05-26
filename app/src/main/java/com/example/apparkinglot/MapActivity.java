@@ -19,6 +19,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.apparkinglot.logic.Boundaries.User.UserBoundary;
+import com.example.apparkinglot.logic.Boundaries.User.UserIdBoundary;
+import com.example.apparkinglot.logic.Boundaries.User.UserRole;
 import com.example.apparkinglot.logic.JsonPlaceHolderApi;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -33,17 +35,22 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
-
+    private JsonPlaceHolderApi jsonPlaceHolderApi;
     GoogleMap mapAPI;
     SupportMapFragment mapFragment;
 
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
-    private  static final int REQUEST_CODE = 101;
+    private static final int REQUEST_CODE = 101;
 
     private Button bUpdate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -53,7 +60,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
-
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.43.218:8092/acs/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 //        bUpdate = findViewById(R.id.bottomSearchAction);
 //
 //        if(bUpdate == null)
@@ -79,8 +90,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     private void fetchLastLocation() {
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,new String[]
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]
                     {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
@@ -88,17 +99,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if(location != null) {
+                if (location != null) {
                     currentLocation = location;
                     Toast.makeText(getApplicationContext(), currentLocation.getLatitude()
-                    +""+currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                            + "" + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
 
 
                     //calls to Actions
                     findViewById(R.id.bottomParkAction).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.d("CURRENT_LOCATION","**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
+                            Log.d("CURRENT_LOCATION", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
                             double lat = currentLocation.getLatitude();
                             double lng = currentLocation.getLongitude();
 
@@ -112,14 +123,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     findViewById(R.id.bottomReleaseAction).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.d("CURRENT_LOCATION","**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
+                            Log.d("CURRENT_LOCATION", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
                         }
                     });
 
                     findViewById(R.id.bottomSearchAction).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.d("CURRENT_LOCATION","**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
+                            Log.d("CURRENT_LOCATION", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
                         }
                     });
 
@@ -127,14 +138,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     findViewById(R.id.bottomUpdateDetails).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.d("UPDATE","*********UPDATE**********");
+                            Log.d("UPDATE", "*********UPDATE**********");
 
                             //TODO update Details
                             updateDetails("2020b.tamir.reznik", "sapir@gmail.com");
 
                         }
                     });
-                    SupportMapFragment supportMapFragment = (SupportMapFragment)getSupportFragmentManager()
+                    SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
                             .findFragmentById(R.id.mapAPI);
                     supportMapFragment.getMapAsync(MapActivity.this);
                 }
@@ -142,7 +153,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         });
     }
 
-    private void updateDetails(String s, String s1) {
+    private void updateDetails(String userDomain, String userEmail) {
+        UserBoundary user = new UserBoundary(new UserIdBoundary(userDomain, userEmail), UserRole.MANAGER, "tamir", ":>");
+
+        jsonPlaceHolderApi.updateUserDetails(userDomain, userEmail, user);
 
     }
 
@@ -173,10 +187,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE:
-                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                  fetchLastLocation();
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    fetchLastLocation();
                 }
                 break;
+        }
     }
-}
 }
