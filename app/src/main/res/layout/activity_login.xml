@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container"
     tools:context=".LoginActivity">
 
     <ImageView
@@ -97,7 +96,7 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:text="enter domain" />
+            android:text="2020b.tamir.reznik" />
 
         <Button
             android:id="@+id/buttonLogin"

@@ -21,9 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    CreateUserFragment createUserFragment = new CreateUserFragment();
-    private EditText email;
-    private EditText domain;
+    public EditText email;
+    public EditText domain;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     private TextView result;
     @Override

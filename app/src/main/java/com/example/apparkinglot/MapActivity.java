@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Intent;
@@ -13,8 +14,12 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.apparkinglot.logic.Boundaries.User.UserBoundary;
+import com.example.apparkinglot.logic.JsonPlaceHolderApi;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,6 +32,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import retrofit2.Call;
+
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     GoogleMap mapAPI;
@@ -36,20 +43,39 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     FusedLocationProviderClient fusedLocationProviderClient;
     private  static final int REQUEST_CODE = 101;
 
+    private Button bUpdate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        fetchLastLocation();
 
+//        bUpdate = findViewById(R.id.bottomSearchAction);
+//
+//        if(bUpdate == null)
+//            Log.d("ERROR NULL", "&&&&&&&&&&&&&&&&&&&&7777");
+//
+//        bUpdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                FragmentManager fm = getSupportFragmentManager();
+//                UpdateDetailsFragment fragment = new UpdateDetailsFragment();
+//
+//                fm.beginTransaction().add(R.id.container , fragment).commit();
+//            }
+//        });
 
- //        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        //        mapFragment = (SupportMapFragment) getSupportFragmentManager()
 //                .findFragmentById(R.id.mapAPI);
 //
 //        mapFragment.getMapAsync(this);
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        fetchLastLocation();
+
     }
 
     private void fetchLastLocation() {
@@ -67,13 +93,47 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     Toast.makeText(getApplicationContext(), currentLocation.getLatitude()
                     +""+currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
 
-                    findViewById(R.id.bottomAction1).setOnClickListener(new View.OnClickListener() {
+
+                    //calls to Actions
+                    findViewById(R.id.bottomParkAction).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("CURRENT_LOCATION","**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
+                            double lat = currentLocation.getLatitude();
+                            double lng = currentLocation.getLongitude();
+
+                            LatLng park = new LatLng(lat, lng);
+                            mapAPI.addMarker(new MarkerOptions().position(park).title("parking Caught ").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                            mapAPI.moveCamera(CameraUpdateFactory.newLatLng(park));
+
+                        }
+                    });
+
+                    findViewById(R.id.bottomReleaseAction).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Log.d("CURRENT_LOCATION","**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
                         }
                     });
 
+                    findViewById(R.id.bottomSearchAction).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("CURRENT_LOCATION","**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
+                        }
+                    });
+
+
+                    findViewById(R.id.bottomUpdateDetails).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("UPDATE","*********UPDATE**********");
+
+                            //TODO update Details
+                            updateDetails("2020b.tamir.reznik", "sapir@gmail.com");
+
+                        }
+                    });
                     SupportMapFragment supportMapFragment = (SupportMapFragment)getSupportFragmentManager()
                             .findFragmentById(R.id.mapAPI);
                     supportMapFragment.getMapAsync(MapActivity.this);
@@ -82,24 +142,28 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         });
     }
 
+    private void updateDetails(String s, String s1) {
+
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mapAPI = googleMap;
 
-        LatLng afekaCollege = new LatLng(32.114892, 34.818029);
-        mapAPI.addMarker(new MarkerOptions().position(afekaCollege).title("afeka").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-        mapAPI.moveCamera(CameraUpdateFactory.newLatLng(afekaCollege));
+        LatLng prak2 = new LatLng(32.114892, 34.818029);
+        mapAPI.addMarker(new MarkerOptions().position(prak2).title("parking Caught").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+        mapAPI.moveCamera(CameraUpdateFactory.newLatLng(prak2));
 
-        LatLng school = new LatLng(32.116430, 34.818353);
-        mapAPI.addMarker(new MarkerOptions().position(school).title("school"));
-        mapAPI.moveCamera(CameraUpdateFactory.newLatLng(school));
+        LatLng park3 = new LatLng(32.116430, 34.818353);
+        mapAPI.addMarker(new MarkerOptions().position(park3).title("parking Caught").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+        mapAPI.moveCamera(CameraUpdateFactory.newLatLng(park3));
 
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
         MarkerOptions markerOptions = new MarkerOptions().position(latLng)
                 .title("I'm here!");
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         googleMap.addMarker(markerOptions);
 
 

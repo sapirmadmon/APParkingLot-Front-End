@@ -10,7 +10,8 @@
     android:paddingTop="5dp"
     tools:context=".MapActivity"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:id="@+id/container">
 
     <fragment
         android:layout_width="match_parent"
@@ -21,47 +22,49 @@
 
     </fragment>
 
-    <FrameLayout
+    <!--    <FrameLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_weight="0.3">-->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.3">
+        >
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <Button
+            android:id="@+id/bottomParkAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="park" />
 
-            <Button
-                android:id="@+id/bottomAction1"
-                android:layout_width="112dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="park via my location" />
+        <Button
+            android:id="@+id/bottomReleaseAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="release" />
 
-            <Button
-                android:id="@+id/bottomReleaseAction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="release" />
+        <Button
+            android:id="@+id/bottomSearchAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Search" />
 
-            <Button
-                android:id="@+id/bottomSearchAction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Search" />
+        <Button
+            android:id="@+id/bottomUpdateDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="update details" />
 
-            <Button
-                android:id="@+id/bottomUpdateDetails"
-                android:layout_width="88dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="update details" />
-
-        </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
+    <!--    </FrameLayout>-->
 
 
 </LinearLayout>
