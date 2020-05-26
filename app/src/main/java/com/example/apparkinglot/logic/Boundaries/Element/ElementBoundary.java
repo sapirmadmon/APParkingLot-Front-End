@@ -17,6 +17,8 @@ public class ElementBoundary {
     private Location location;
     private Map<String, Object> elementAttributes;
 
+
+
     public ElementBoundary(ElementIdBoundary elementId, String type, String name, Boolean active, Date timeStamp,
                            Location location, Map<String, Object> elemntAttributes,  Map<String, UserIdBoundary>  createdBy) {
         super();
@@ -33,6 +35,8 @@ public class ElementBoundary {
 
     public ElementBoundary() {
     }
+
+
 
     public String getType() {
         return type;

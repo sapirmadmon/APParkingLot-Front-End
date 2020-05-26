@@ -1,5 +1,6 @@
 package com.example.apparkinglot.logic;
 
+import com.example.apparkinglot.logic.Boundaries.Action.ActionBoundary;
 import com.example.apparkinglot.logic.Boundaries.Element.ElementBoundary;
 import com.example.apparkinglot.logic.Boundaries.User.NewUserDetailsBoundary;
 import com.example.apparkinglot.logic.Boundaries.User.UserBoundary;
@@ -23,5 +24,8 @@ public interface JsonPlaceHolderApi {
     void updateUserDetails(@Path("userDomain") String userDomain , @Path("userEmail") String userEmail, @Body UserBoundary userBoundary);
 
     @POST("elements/{managerDomain}/{managerEmail}")
-    Call<ElementBoundary> CreateNewElement(@Body ElementBoundary elementBoundary);
+    Call<ElementBoundary> CreateNewElement(@Path("managerDomain") String managerDomain , @Path("managerEmail") String managerEmail, @Body ElementBoundary elementBoundary);
+
+    @POST("actions")
+    Call<ActionBoundary> invokeAnAction(@Body ActionBoundary actionBoundary);
 }

@@ -16,8 +16,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.apparkinglot.logic.Boundaries.Action.ActionBoundary;
+import com.example.apparkinglot.logic.Boundaries.Action.InvokingUser;
+import com.example.apparkinglot.logic.Boundaries.Element.ElementBoundary;
 import com.example.apparkinglot.logic.Boundaries.User.UserBoundary;
 import com.example.apparkinglot.logic.Boundaries.User.UserIdBoundary;
 import com.example.apparkinglot.logic.Boundaries.User.UserRole;
@@ -34,6 +38,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,10 +52,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     GoogleMap mapAPI;
     SupportMapFragment mapFragment;
+    private TextView result;
 
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
+
+    String email = LoginActivity.email.getText().toString();
+    String domain = LoginActivity.domain.getText().toString();
 
     private Button bUpdate;
 
@@ -61,6 +73,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
 
+        result = findViewById(R.id.textResult);
         String email = LoginActivity.email.getText().toString();
         String domain = LoginActivity.domain.getText().toString();
 
@@ -74,7 +87,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         bUpdate = findViewById(R.id.bottomUpdateDetails);
 
-        if(bUpdate == null)
+        if (bUpdate == null)
             Log.d("ERROR NULL", "&&&&&&&&&&&&&&&&&&&&7777");
 
         bUpdate.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +97,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 FragmentManager fm = getSupportFragmentManager();
                 UpdateDetailsFragment fragment = new UpdateDetailsFragment();
 
-                fm.beginTransaction().add(R.id.container1 , fragment).commit();
+                fm.beginTransaction().add(R.id.container1, fragment).commit();
             }
         });
 
@@ -124,6 +137,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             mapAPI.addMarker(new MarkerOptions().position(park).title("parking Caught ").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
                             mapAPI.moveCamera(CameraUpdateFactory.newLatLng(park));
 
+                            createElement();
+                            //createAction();
                         }
                     });
 
@@ -159,6 +174,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
     }
+
 
     private void updateDetails(String userDomain, String userEmail) {
         UserBoundary user = new UserBoundary(new UserIdBoundary(userDomain, userEmail), UserRole.MANAGER, "tamir", ":>");
@@ -201,56 +217,103 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
+    //NOT WORK
+    private void createAction() {
+
+        String type = "Grab parking";
+        UserIdBoundary userId = new UserIdBoundary(domain, email);
+        InvokingUser invokingUser = new InvokingUser(userId);
+
+        ActionBoundary actionBoundary = new ActionBoundary(null, type, null, null,invokingUser, null);
+
+        Call<ActionBoundary> call = jsonPlaceHolderApi.invokeAnAction(actionBoundary);
+
+        call.enqueue(new Callback<ActionBoundary>() {
+            @Override
+            public void onResponse(Call<ActionBoundary> call, Response<ActionBoundary> response) {
+
+                if (!response.isSuccessful()) {
+                    result.setText("code: " + response.code());
+                    return;
+                }
+
+                ActionBoundary actionBoundaryResponse = response.body();
+                String content = "";
+                content += "code: " + response.code() + "\n";
+                content += "domain action: " + actionBoundaryResponse.getActionId().getDomain() + "\n";
+                content += "id action: " + actionBoundaryResponse.getActionId().getId() + "\n";
+                content += "type: " + actionBoundaryResponse.getType() + "\n";
+                content += "domain element: " + actionBoundaryResponse.getElement().getElement().getDomain() + "\n";
+                content += "id element: " + actionBoundaryResponse.getElement().getElement().getId() + "\n";
+                content += "time: " + actionBoundaryResponse.getCreatedTimestamp() + "\n";
+                content += "invokeBy domain " + actionBoundaryResponse.getInvokedBy().getUserId().getDomain() + "\n";
+                content += "invokeBy email " + actionBoundaryResponse.getInvokedBy().getUserId().getEmail() + "\n";
+                content += "Action Attributes: " + actionBoundaryResponse.getActionAttributes() + "\n";
+
+                Log.d("ACTION BOUNDARY", "*********" + content);
+                //result.setText(content);
+            }
+
+            @Override
+            public void onFailure(Call<ActionBoundary> call, Throwable t) {
+                result.setText(t.getMessage());
+                Log.d("ON FAILURE", t.getMessage());
+            }
+        });
+    }
 
 
-    //    private void createElement() {
-//
-//        String type = "parking";
-//        String name = "number car";
-//
-//        String email = LoginActivity.email.getText().toString();
-//        String domain = LoginActivity.domain.getText().toString();
-//
-//        UserIdBoundary userId = new UserIdBoundary(domain, email);
-//        Location latLng = new Location(currentLocation.getLongitude(), currentLocation.getLatitude());
-//
-//        Log.d("TEST", "#####" + email + " " + domain + "#######");
-//
-//        ElementBoundary elementBoundary = new ElementBoundary(null, type, name, Boolean.FALSE, null, latLng, null, userId);
-//
-//        Call<UserBoundary> call = jsonPlaceHolderApi.CreateNewElement(elementBoundary);
-//
-//        call.enqueue(new Callback<ElementBoundary>() {
-//            @Override
-//            public void onResponse(Call<ElementBoundary> call, Response<ElementBoundary> response) {
-//
-//                if(!response.isSuccessful()) {
-//                    textViewResult.setText("code: "+ response.code());
-//                    return;
-//                }
-//
-//                ElementBoundary ElementBoundaryResponse = response.body();
-//                String  content="";
-//                content += "code: " + response.code() + "\n";
-//                content += "domain: " + ElementBoundaryResponse.getElementId().getDomain() + "\n";
-//                content += "id: " + ElementBoundaryResponse.getElementId().getId()+ "\n";
-//                content += "type: " + ElementBoundaryResponse.getType() + "\n";
-//                content += "name: " + ElementBoundaryResponse.getName() + "\n";
-//                content += "active: " + ElementBoundaryResponse.getActive() + "\n";
-//                content += "time: " + ElementBoundaryResponse.getCreatedTimestamp()+ "\n";
-//                content += "createdBy: " + ElementBoundaryResponse.getCreateBy().values() + "\n";
-//                content += "location: " + ElementBoundaryResponse.getLocation().getLat() + "," + ElementBoundaryResponse.getLocation().getLng() + "\n";
-//
-//                Log.d("ELEMENT BOUNDARY", content);
-//                //textViewResult.setText(content);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ElementBoundary> call, Throwable t) {
-//               // textViewResult.setText(t.getMessage());
-//                Log.d("ON FAILURE", t.getMessage());
-//            }
-//        });
-//    }
+    private void createElement() {
+        String type = "parking";
+        String name = "number car";
+
+        final HashMap<String, UserIdBoundary> myMap= new HashMap<>();
+        UserIdBoundary userId = new UserIdBoundary(domain, email);
+        myMap.put("userId", userId);
+        com.example.apparkinglot.logic.Boundaries.Element.Location latLng =
+                new com.example.apparkinglot.logic.Boundaries.Element.Location(currentLocation.getLongitude(), currentLocation.getLatitude());
+
+        ElementBoundary elementBoundary = new ElementBoundary(null, type, name, Boolean.FALSE, null,
+                latLng, null, myMap);
+
+
+        Log.d("TEST LOCATION", "^^^^^^^^^^^^" + currentLocation.getLongitude() + " " + currentLocation.getLatitude() + "^^^^^^^^^^");
+
+        Call<ElementBoundary> call = jsonPlaceHolderApi.CreateNewElement(domain, email, elementBoundary);
+
+        call.enqueue(new Callback<ElementBoundary>() {
+            @Override
+            public void onResponse(Call<ElementBoundary> call, Response<ElementBoundary> response) {
+
+                if (!response.isSuccessful()) {
+                    result.setText("code: " + response.code());
+                    return;
+                }
+
+                ElementBoundary ElementBoundaryResponse = response.body();
+                String content = "";
+                content += "code: " + response.code() + "\n";
+                content += "domain: " + ElementBoundaryResponse.getElementId().getDomain() + "\n";
+                content += "id: " + ElementBoundaryResponse.getElementId().getId() + "\n";
+                content += "type: " + ElementBoundaryResponse.getType() + "\n";
+                content += "name: " + ElementBoundaryResponse.getName() + "\n";
+                content += "active: " + ElementBoundaryResponse.getActive() + "\n";
+                content += "time: " + ElementBoundaryResponse.getCreatedTimestamp() + "\n";
+                for (Map.Entry<String, UserIdBoundary> entry : myMap.entrySet()) {
+                    content += "createdBy: " + entry.getKey() + ": " + entry.getValue().getDomain() + ", " + entry.getValue().getEmail() + "\n";
+                }
+                content += "location: " + ElementBoundaryResponse.getLocation().getLat() + "," + ElementBoundaryResponse.getLocation().getLng() + "\n";
+
+                Log.d("ELEMENT BOUNDARY", "******************"+content);
+                //result.setText(content);
+            }
+
+            @Override
+            public void onFailure(Call<ElementBoundary> call, Throwable t) {
+                result.setText(t.getMessage());
+                Log.d("ON FAILURE", t.getMessage());
+            }
+        });
+    }
 
 }
