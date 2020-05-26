@@ -38,7 +38,7 @@ public class CreateUserActivity extends AppCompatActivity {
         textViewResult = findViewById(R.id.textView);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.129:8092/acs/")
+                .baseUrl("http://192.168.14.20:8092/acs/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);

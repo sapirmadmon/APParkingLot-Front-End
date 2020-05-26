@@ -60,26 +60,33 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
+
+        String email = LoginActivity.email.getText().toString();
+        String domain = LoginActivity.domain.getText().toString();
+
+        Log.d("TEST", "*******#####" + email + " " + domain + "#######*******");
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.43.218:8092/acs/")
+                .baseUrl("http://192.168.14.20:8092/acs/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-//        bUpdate = findViewById(R.id.bottomSearchAction);
-//
-//        if(bUpdate == null)
-//            Log.d("ERROR NULL", "&&&&&&&&&&&&&&&&&&&&7777");
-//
-//        bUpdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                FragmentManager fm = getSupportFragmentManager();
-//                UpdateDetailsFragment fragment = new UpdateDetailsFragment();
-//
-//                fm.beginTransaction().add(R.id.container , fragment).commit();
-//            }
-//        });
+
+        bUpdate = findViewById(R.id.bottomUpdateDetails);
+
+        if(bUpdate == null)
+            Log.d("ERROR NULL", "&&&&&&&&&&&&&&&&&&&&7777");
+
+        bUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fm = getSupportFragmentManager();
+                UpdateDetailsFragment fragment = new UpdateDetailsFragment();
+
+                fm.beginTransaction().add(R.id.container1 , fragment).commit();
+            }
+        });
 
         //        mapFragment = (SupportMapFragment) getSupportFragmentManager()
 //                .findFragmentById(R.id.mapAPI);
@@ -135,16 +142,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     });
 
 
-                    findViewById(R.id.bottomUpdateDetails).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Log.d("UPDATE", "*********UPDATE**********");
-
-                            //TODO update Details
-                            updateDetails("2020b.tamir.reznik", "sapir@gmail.com");
-
-                        }
-                    });
+//                    findViewById(R.id.bottomUpdateDetails).setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Log.d("UPDATE", "*********UPDATE**********");
+//
+//                            //TODO update Details
+//                            updateDetails("2020b.tamir.reznik", "sapir@gmail.com");
+//
+//                        }
+//                    });
                     SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
                             .findFragmentById(R.id.mapAPI);
                     supportMapFragment.getMapAsync(MapActivity.this);
@@ -193,4 +200,57 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 break;
         }
     }
+
+
+
+    //    private void createElement() {
+//
+//        String type = "parking";
+//        String name = "number car";
+//
+//        String email = LoginActivity.email.getText().toString();
+//        String domain = LoginActivity.domain.getText().toString();
+//
+//        UserIdBoundary userId = new UserIdBoundary(domain, email);
+//        Location latLng = new Location(currentLocation.getLongitude(), currentLocation.getLatitude());
+//
+//        Log.d("TEST", "#####" + email + " " + domain + "#######");
+//
+//        ElementBoundary elementBoundary = new ElementBoundary(null, type, name, Boolean.FALSE, null, latLng, null, userId);
+//
+//        Call<UserBoundary> call = jsonPlaceHolderApi.CreateNewElement(elementBoundary);
+//
+//        call.enqueue(new Callback<ElementBoundary>() {
+//            @Override
+//            public void onResponse(Call<ElementBoundary> call, Response<ElementBoundary> response) {
+//
+//                if(!response.isSuccessful()) {
+//                    textViewResult.setText("code: "+ response.code());
+//                    return;
+//                }
+//
+//                ElementBoundary ElementBoundaryResponse = response.body();
+//                String  content="";
+//                content += "code: " + response.code() + "\n";
+//                content += "domain: " + ElementBoundaryResponse.getElementId().getDomain() + "\n";
+//                content += "id: " + ElementBoundaryResponse.getElementId().getId()+ "\n";
+//                content += "type: " + ElementBoundaryResponse.getType() + "\n";
+//                content += "name: " + ElementBoundaryResponse.getName() + "\n";
+//                content += "active: " + ElementBoundaryResponse.getActive() + "\n";
+//                content += "time: " + ElementBoundaryResponse.getCreatedTimestamp()+ "\n";
+//                content += "createdBy: " + ElementBoundaryResponse.getCreateBy().values() + "\n";
+//                content += "location: " + ElementBoundaryResponse.getLocation().getLat() + "," + ElementBoundaryResponse.getLocation().getLng() + "\n";
+//
+//                Log.d("ELEMENT BOUNDARY", content);
+//                //textViewResult.setText(content);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ElementBoundary> call, Throwable t) {
+//               // textViewResult.setText(t.getMessage());
+//                Log.d("ON FAILURE", t.getMessage());
+//            }
+//        });
+//    }
+
 }

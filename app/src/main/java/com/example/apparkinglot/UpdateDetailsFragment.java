@@ -38,11 +38,8 @@ public class UpdateDetailsFragment extends Fragment {
         //Log.d("TEST", "#####" + email + " " + domain + "#######");
 
 
-        //click on "update details" button
-        Button bUpdate = (Button) view.findViewById(R.id.buttonUpdateDetails);
-        if (bUpdate == null)
-            Log.d("ERROR NULL", "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-
+        //click on "update user" button
+        Button bUpdate = view.findViewById(R.id.bottomUpdateUser);
         bUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,8 +47,9 @@ public class UpdateDetailsFragment extends Fragment {
 
                 //TODO url update
                 //TODO Pull email and domain from login window
-                updateDetails("2020b.tamir.reznik", "sapir@gmail.com");
+                //updateDetails("2020b.tamir.reznik", "sapir@gmail.com");
 
+                //TODO Toast that update Succeeded
 
                 getFragmentManager().beginTransaction().remove(UpdateDetailsFragment.this).commit(); //out from the fragment
             }
@@ -59,7 +57,7 @@ public class UpdateDetailsFragment extends Fragment {
 
 
         //click on "exit" (x) button
-        Button bExit = (Button) view.findViewById(R.id.buttonExit);
+        Button bExit = view.findViewById(R.id.buttonExit);
         bExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

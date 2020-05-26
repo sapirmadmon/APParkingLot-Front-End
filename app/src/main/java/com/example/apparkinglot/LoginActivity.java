@@ -21,8 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public EditText email;
-    public EditText domain;
+    public static EditText email;
+    public static EditText domain;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     private TextView result;
     @Override
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         domain =findViewById(R.id.editTextDomain);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.43.218:8092/acs/")
+                .baseUrl("http://192.168.14.20:8092/acs/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
