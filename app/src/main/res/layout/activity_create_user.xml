@@ -37,7 +37,7 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:text="enter email" />
+            android:hint="enter email" />
 
         <EditText
             android:id="@+id/editTextUserName"
@@ -46,7 +46,7 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:text="enter user name" />
+            android:hint="enter user name" />
 
         <EditText
             android:id="@+id/editTextRole"
@@ -55,7 +55,7 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:text="enter role" />
+            android:hint="enter role" />
 
         <EditText
             android:id="@+id/editTextAvatar"
@@ -64,7 +64,7 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:text="enter avatar" />
+            android:hint="enter avatar" />
 
         <Button
             android:id="@+id/bottomCreateUser"

@@ -43,11 +43,11 @@
             android:text="park" />
 
         <Button
-            android:id="@+id/bottomReleaseAction"
+            android:id="@+id/bottomDepartAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="release" />
+            android:text="depart" />
 
         <Button
             android:id="@+id/bottomSearchAction"

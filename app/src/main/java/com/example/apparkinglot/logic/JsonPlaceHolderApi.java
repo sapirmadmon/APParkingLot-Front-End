@@ -21,11 +21,11 @@ public interface JsonPlaceHolderApi {
     Call<UserBoundary> Login (@Path("userDomain") String userDomain , @Path("userEmail") String userEmail);
 
     @PUT("users/{userDomain}/{userEmail}")
-    void updateUserDetails(@Path("userDomain") String userDomain , @Path("userEmail") String userEmail, @Body UserBoundary userBoundary);
+    Call<Void> updateUserDetails(@Path("userDomain") String userDomain , @Path("userEmail") String userEmail, @Body UserBoundary userBoundary);
 
     @POST("elements/{managerDomain}/{managerEmail}")
     Call<ElementBoundary> CreateNewElement(@Path("managerDomain") String managerDomain , @Path("managerEmail") String managerEmail, @Body ElementBoundary elementBoundary);
 
     @POST("actions")
-    Call<ActionBoundary> invokeAnAction(@Body ActionBoundary actionBoundary);
+    Call<ActionBoundary> invokeAction(@Body ActionBoundary actionBoundary);
 }

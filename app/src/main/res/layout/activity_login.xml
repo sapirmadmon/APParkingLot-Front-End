@@ -87,7 +87,7 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:text="enter email" />
+            android:hint="enter email" />
 
         <EditText
             android:id="@+id/editTextDomain"

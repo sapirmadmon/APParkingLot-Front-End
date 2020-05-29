@@ -80,7 +80,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         Log.d("TEST", "*******#####" + email + " " + domain + "#######*******");
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.14.20:8092/acs/")
+                .baseUrl("http://172.16.254.101:8092/acs/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
@@ -137,15 +137,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             mapAPI.addMarker(new MarkerOptions().position(park).title("parking Caught ").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
                             mapAPI.moveCamera(CameraUpdateFactory.newLatLng(park));
 
-                            createElement();
+                            InvokeAction("park");
+                            //createElement();
                             //createAction();
                         }
                     });
 
-                    findViewById(R.id.bottomReleaseAction).setOnClickListener(new View.OnClickListener() {
+                    findViewById(R.id.bottomDepartAction).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Log.d("CURRENT_LOCATION", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
+
+                            InvokeAction("depart");
+
                         }
                     });
 
@@ -176,12 +180,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
 
-    private void updateDetails(String userDomain, String userEmail) {
-        UserBoundary user = new UserBoundary(new UserIdBoundary(userDomain, userEmail), UserRole.MANAGER, "tamir", ":>");
 
-        jsonPlaceHolderApi.updateUserDetails(userDomain, userEmail, user);
-
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -217,16 +216,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
-    //NOT WORK
-    private void createAction() {
 
-        String type = "Grab parking";
+
+    //NOT WORK
+    private void InvokeAction(String getType) {
+
+        String type = getType;
         UserIdBoundary userId = new UserIdBoundary(domain, email);
         InvokingUser invokingUser = new InvokingUser(userId);
 
         ActionBoundary actionBoundary = new ActionBoundary(null, type, null, null,invokingUser, null);
 
-        Call<ActionBoundary> call = jsonPlaceHolderApi.invokeAnAction(actionBoundary);
+        Call<ActionBoundary> call = jsonPlaceHolderApi.invokeAction(actionBoundary);
 
         call.enqueue(new Callback<ActionBoundary>() {
             @Override

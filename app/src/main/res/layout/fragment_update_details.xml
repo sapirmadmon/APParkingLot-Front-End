@@ -44,7 +44,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="textPersonName"
-                android:text="update user name" />
+                android:hint="update user name" />
 
             <EditText
                 android:id="@+id/editTextUpdateRole"
@@ -53,7 +53,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="textPersonName"
-                android:text="update role" />
+                android:hint="update role" />
 
             <EditText
                 android:id="@+id/editTextUpdateAvatar"
@@ -62,7 +62,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="textPersonName"
-                android:text="update avatar" />
+                android:hint="update avatar" />
 
             <Button
                 android:id="@+id/bottomUpdateUser"
@@ -71,6 +71,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"
                 android:text="update" />
+
 
         </LinearLayout>
 
