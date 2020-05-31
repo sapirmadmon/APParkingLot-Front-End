@@ -42,12 +42,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
+import java.util.HashMap;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,6 +63,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     String email = LoginActivity.email.getText().toString();
     String domain = LoginActivity.domain.getText().toString();
 
+    String elementId = CreateUserActivity.elementCarId;
+    String elementDomain = CreateUserActivity.elementCarDomain;
+
+    ElementBoundary elementBoundaryCar = CreateUserActivity.elementCar;
+    private static double lng;
+    private static double lat;
+
     private Button bUpdate;
 
     @Override
@@ -79,17 +82,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
 
-        result = findViewById(R.id.textResult);
-        String email = LoginActivity.email.getText().toString();
-        String domain = LoginActivity.domain.getText().toString();
 
-        Log.d("TEST", "*******#####" + email + " " + domain + "#######*******");
+        result = findViewById(R.id.textResult);
+
+       // Log.d("TEST_LOCATION", lat + ", "+ lng); //print 0 0
+
+        Log.d("ELEMENT_CAR", "##########  " + elementBoundaryCar.getName() + "  ##########");
+        //Log.d("ELEMENT_CAR", "##########  " + elementId + " , " + elementDomain + "  ##########");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://172.16.254.101:8092/acs/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+
+
+        updateDetails();
 
         bUpdate = findViewById(R.id.bottomUpdateDetails);
 
@@ -117,12 +126,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     }
 
+    public double getLat(double lat) { return lat; }
+    public double getLng(double lng) {
+        return lng;
+    }
+
     private void fetchLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]
                     {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
+
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -133,13 +148,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             + "" + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
 
 
+                    lat = currentLocation.getLatitude();
+                    lng = currentLocation.getLongitude();
+
+                    //Log.d("TEST_LOCATION", lat + ", "+ lng);
+
                     //calls to Actions
                     findViewById(R.id.bottomParkAction).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Log.d("CURRENT_LOCATION", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
-                            double lat = currentLocation.getLatitude();
-                            double lng = currentLocation.getLongitude();
+
 
                             InvokeAction("park");
 
@@ -154,8 +173,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                         public void onClick(View v) {
                             Log.d("CURRENT_LOCATION", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
                             InvokeAction("depart");
-
-
                         }
                     });
 
@@ -167,20 +184,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             InvokeAction("search");
 
                         }
-
                     });
 
 
-//                    findViewById(R.id.bottomUpdateDetails).setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Log.d("UPDATE", "*********UPDATE**********");
-//
-//                            //TODO update Details
-//                            updateDetails("2020b.tamir.reznik", "sapir@gmail.com");
-//
-//                        }
-//                    });
                     SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
                             .findFragmentById(R.id.mapAPI);
                     supportMapFragment.getMapAsync(MapActivity.this);
@@ -188,7 +194,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
     }
-
 
 
 
@@ -227,6 +232,55 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
 
+    private void updateUserRole(UserRole userRole) {
+
+        UserBoundary userUpdate = new UserBoundary(new UserIdBoundary(domain,email), userRole, null, null);
+        Call<Void> call = jsonPlaceHolderApi.updateUserDetails(domain, email, userUpdate);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.d("ON_RESPONSE_UPDATE", "Code:" + response.code());
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("onFailure", t.getMessage());
+            }
+        });
+    }
+
+    private void updateDetails() {
+
+
+        final HashMap<String, UserIdBoundary> myMap= new HashMap<>();
+        UserIdBoundary userId = new UserIdBoundary(domain, email);
+        myMap.put("userId", userId);
+
+        updateUserRole(UserRole.MANAGER);
+
+       // ElementBoundary elementUpdate = new ElementBoundary(new ElementIdBoundary(elementDomain,elementId), null, null, null, null,
+       //         new com.example.apparkinglot.logic.Boundaries.Element.Location(55.30, 22.00), null, myMap);
+
+
+        elementBoundaryCar.setLocation(new com.example.apparkinglot.logic.Boundaries.Element.Location(22.55, 33.5));
+       Call<Void> call = jsonPlaceHolderApi.updateElementDetails(domain, email, elementDomain, elementId, elementBoundaryCar);
+
+      //Log.d("UPDATE_LOCATION", lat+" , "+lng);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.d("ON_RESPONSE_UPD_ELEMENT", "Code:" + response.code());
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("onFailure", t.getMessage());
+            }
+        });
+
+       // updateUserRole(UserRole.PLAYER);
+
+    }
 
     //NOT WORK
     private void InvokeAction(final String getType) {
@@ -236,7 +290,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         UserIdBoundary userId = new UserIdBoundary(domain, email);
         InvokingUser invokingUser = new InvokingUser(userId);
 
-        ElementIdBoundary elementIdCar = new ElementIdBoundary("2020b.tamir.reznik", "a5d1cc3d-ee09-4181-bb46-3f1d412516b8");
+        ElementIdBoundary elementIdCar = new ElementIdBoundary("2020b.tamir.reznik", "d5f140ac-1714-4fc7-af14-781757a755b7");
         ElementOfAction eoa = new ElementOfAction(elementIdCar);
 
         ActionBoundary actionBoundary = new ActionBoundary(new ActionIdBoundary(), type, eoa, null, invokingUser, new HashMap<String, Object>());
@@ -267,10 +321,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 //TODO Park
                 if(getType.equals("park")){
                     Log.d("PARK","*********press park*********");
-                    if(actionBoundaryResponse.equals(true))
+                   // if(actionBoundaryResponse.equals(Boolean.TRUE))
                         Toast.makeText(getApplicationContext(),getType + " successful",Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(getApplicationContext(),getType + " not succeed",Toast.LENGTH_SHORT).show();
+                   // else
+                   //     Toast.makeText(getApplicationContext(),getType + " not succeed",Toast.LENGTH_SHORT).show();
                 }
 
                 //TODO Depart

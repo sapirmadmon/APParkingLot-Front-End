@@ -32,6 +32,10 @@ public class CreateUserActivity extends AppCompatActivity {
     private TextView textViewResult;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
 
+    public static String elementCarId;
+    public static String elementCarDomain;
+    public static ElementBoundary elementCar;
+
     private static UserBoundary userBoundary;
 
     private EditText email;
@@ -41,10 +45,14 @@ public class CreateUserActivity extends AppCompatActivity {
     private EditText numberCar;
     private EditText nameCar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
+
+        elementCarId = null;
+        elementCarDomain = null;
 
         textViewResult = findViewById(R.id.textView);
 
@@ -228,6 +236,13 @@ public class CreateUserActivity extends AppCompatActivity {
 
                 Log.d("ELEMENT CAR BOUNDARY", "******************"+content);
                 //result.setText(content);
+
+                elementCarId = ElementBoundaryResponse.getElementId().getId();
+                elementCarDomain = ElementBoundaryResponse.getElementId().getDomain();
+                elementCar = ElementBoundaryResponse;
+
+                Log.d( "CAR", elementCarDomain + ", " + elementCarId);
+
             }
 
 
