@@ -118,7 +118,7 @@
                 android:id="@+id/textViewRes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFF"/>
+                android:gravity="center"/>
 
         </androidx.core.widget.NestedScrollView>
 

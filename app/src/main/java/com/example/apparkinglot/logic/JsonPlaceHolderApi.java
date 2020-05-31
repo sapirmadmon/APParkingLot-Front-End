@@ -27,5 +27,6 @@ public interface JsonPlaceHolderApi {
     Call<ElementBoundary> CreateNewElement(@Path("managerDomain") String managerDomain , @Path("managerEmail") String managerEmail, @Body ElementBoundary elementBoundary);
 
     @POST("actions")
-    Call<ActionBoundary> invokeAction(@Body ActionBoundary actionBoundary);
+    Call<Object> invokeAction(@Body ActionBoundary actionBoundary);
+
 }

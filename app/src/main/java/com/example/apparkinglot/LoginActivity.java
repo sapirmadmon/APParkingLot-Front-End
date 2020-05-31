@@ -3,6 +3,7 @@ package com.example.apparkinglot;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(!response.isSuccessful()) {
                     result.setText("code: "+ response.code() + " " + response.message());
-
+                    result.setTextColor(Color.RED);
                     return;
                 }
 

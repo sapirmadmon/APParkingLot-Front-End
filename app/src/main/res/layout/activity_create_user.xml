@@ -66,6 +66,24 @@
             android:inputType="textPersonName"
             android:hint="enter avatar" />
 
+        <EditText
+            android:id="@+id/editTextCarName"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:hint="enter name of car" />
+
+        <EditText
+            android:id="@+id/editTextNumberCar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:hint="enter number car" />
+
         <Button
             android:id="@+id/bottomCreateUser"
             android:layout_width="wrap_content"
