@@ -12,7 +12,7 @@ import com.example.apparkinglot.logic.Boundaries.User.UserRole;
 import com.google.gson.Gson;
 
 
-public class ActionsAdminManagerActivity extends AppCompatActivity {
+public class ActionsManagerActivity extends AppCompatActivity {
 //    private TextView textViewResult;
 //    private JsonPlaceHolderApi jsonPlaceHolderApi;
 //
@@ -24,7 +24,7 @@ public class ActionsAdminManagerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actions_admin_manager);
+        setContentView(R.layout.activity_actions_manager);
 
 //        textViewResult = findViewById(R.id.textView);
 //
@@ -50,13 +50,13 @@ public class ActionsAdminManagerActivity extends AppCompatActivity {
 
         String json = gson.toJson(userB);
 
-        findViewById(R.id.buttonMap).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ActionsAdminManagerActivity.this, MapActivity.class);
-                startActivity(intent);
-            }
-        });
+//        findViewById(R.id.buttonMap).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(ActionsManagerActivity.this, MapActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
 

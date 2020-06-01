@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="10dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
     tools:context=".MapActivity"
     android:orientation="vertical"
     android:weightSum="1"
     android:id="@+id/container1">
+
 
     <fragment
         android:layout_width="match_parent"
@@ -19,7 +20,6 @@
         android:id="@+id/mapAPI"
         android:layout_weight="0.7"
         android:name="com.google.android.gms.maps.SupportMapFragment">
-
     </fragment>
 
     <!--    <FrameLayout-->
@@ -28,52 +28,103 @@
     <!--        android:layout_weight="0.3">-->
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="317dp"
         android:layout_height="0dp"
-        android:layout_weight="0.3">
-        >
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.3"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/bottomParkAction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="park" />
+        <!--        <ImageButton-->
+        <!--            android:id="@+id/bottomDepartAction"-->
+        <!--            android:layout_width="60dp"-->
+        <!--            android:layout_height="60dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginLeft="15dp"-->
+        <!--            android:layout_marginRight="15dp"-->
+        <!--            android:background="#FFFF"-->
+        <!--            android:scaleType="fitXY"-->
+        <!--            app:srcCompat="@drawable/no_parking_but"/>-->
 
-        <Button
+        <ImageView
             android:id="@+id/bottomDepartAction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="depart" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/no_parking_but"></ImageView>
 
-        <Button
+        <ImageView
+            android:id="@+id/bottomParkAction"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/park_but" />
+
+        <ImageView
             android:id="@+id/bottomSearchAction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Search" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/search_but" />
 
-        <Button
+        <ImageView
             android:id="@+id/bottomUpdateDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="update details" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/person_but" />
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <!--        <ImageButton-->
+        <!--            android:id="@+id/bottomParkAction"-->
+        <!--            android:layout_width="60dp"-->
+        <!--            android:layout_height="60dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginLeft="15dp"-->
+        <!--            android:layout_alignParentBottom="true"-->
+        <!--            android:layout_marginRight="15dp"-->
+        <!--            android:background="#FFFF"-->
+        <!--            android:scaleType="fitXY"-->
+        <!--            app:srcCompat="@drawable/park_but"/>-->
 
-            <TextView
-                android:id="@+id/textResult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"/>
+        <!--        <ImageButton-->
+        <!--            android:id="@+id/bottomSearchAction"-->
+        <!--            android:layout_width="60dp"-->
+        <!--            android:layout_height="60dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_alignParentBottom="true"-->
+        <!--            android:layout_marginLeft="15dp"-->
+        <!--            android:layout_marginRight="15dp"-->
+        <!--            android:background="#FFFF"-->
+        <!--            android:scaleType="fitXY"-->
+        <!--            app:srcCompat="@drawable/search_but" />-->
 
-        </androidx.core.widget.NestedScrollView>
+        <!--        <ImageButton-->
+        <!--            android:id="@+id/bottomUpdateDetails"-->
+        <!--            android:layout_width="60dp"-->
+        <!--            android:layout_height="60dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_alignParentBottom="true"-->
+        <!--            android:layout_marginLeft="15dp"-->
+        <!--            android:layout_marginRight="15dp"-->
+        <!--            android:background="#FFFF"-->
+        <!--            android:scaleType="fitXY"-->
+        <!--            app:srcCompat="@drawable/person_but" />-->
+
+        <!--        <androidx.core.widget.NestedScrollView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content">-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/textResult"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:background="#FFFFFF"/>-->
+
+        <!--        </androidx.core.widget.NestedScrollView>-->
 
     </LinearLayout>
     <!--    </FrameLayout>-->

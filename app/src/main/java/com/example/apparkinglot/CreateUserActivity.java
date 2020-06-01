@@ -3,11 +3,13 @@ package com.example.apparkinglot;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.apparkinglot.logic.Boundaries.Element.ElementBoundary;
 import com.example.apparkinglot.logic.Boundaries.Element.ElementIdBoundary;
@@ -17,6 +19,8 @@ import com.example.apparkinglot.logic.Boundaries.User.UserBoundary;
 import com.example.apparkinglot.logic.Boundaries.User.UserIdBoundary;
 import com.example.apparkinglot.logic.Boundaries.User.UserRole;
 import com.example.apparkinglot.logic.JsonPlaceHolderApi;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,9 +36,13 @@ public class CreateUserActivity extends AppCompatActivity {
     private TextView textViewResult;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
 
-    public static String elementCarId;
-    public static String elementCarDomain;
-    public static ElementBoundary elementCar;
+    private String elementCarId;
+    private String elementCarDomain;
+    //public static ElementBoundary elementCar;
+
+    public static final String SHARED_PREFS = "SharedPrefs";
+    public static final String CAR_DOMAIN = "car_domain";
+    public static final String CAR_ID = "car_id";
 
     private static UserBoundary userBoundary;
 
@@ -46,13 +54,13 @@ public class CreateUserActivity extends AppCompatActivity {
     private EditText nameCar;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
 
-        elementCarId = null;
-        elementCarDomain = null;
 
         textViewResult = findViewById(R.id.textView);
 
@@ -75,6 +83,24 @@ public class CreateUserActivity extends AppCompatActivity {
         });
     }
 
+
+
+    public void saveData(String domainCar , String idCar) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(CAR_DOMAIN, domainCar);
+        editor.putString(CAR_ID, idCar);
+        editor.apply();
+        Toast.makeText(this , "data save", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(CreateUserActivity.SHARED_PREFS, MODE_PRIVATE);
+        this.elementCarDomain = sharedPreferences.getString(CreateUserActivity.CAR_DOMAIN, "-1");
+        this.elementCarId = sharedPreferences.getString(CreateUserActivity.CAR_ID, "-1");
+
+    }
 
 
     private void createUserAndCarElement() {
@@ -215,6 +241,10 @@ public class CreateUserActivity extends AppCompatActivity {
                 }
 
                 ElementBoundary ElementBoundaryResponse = response.body();
+
+                saveData(ElementBoundaryResponse.getElementId().getDomain(), ElementBoundaryResponse.getElementId().getId());
+                Log.d( "SAVECAR", elementCarDomain + ", " + elementCarId);
+
                 String content = "";
                 content += "code: " + response.code() + "\n";
                 content += "domain: " + ElementBoundaryResponse.getElementId().getDomain() + "\n";
@@ -237,11 +267,11 @@ public class CreateUserActivity extends AppCompatActivity {
                 Log.d("ELEMENT CAR BOUNDARY", "******************"+content);
                 //result.setText(content);
 
-                elementCarId = ElementBoundaryResponse.getElementId().getId();
-                elementCarDomain = ElementBoundaryResponse.getElementId().getDomain();
-                elementCar = ElementBoundaryResponse;
+                //elementCarId = ElementBoundaryResponse.getElementId().getId();
+                //elementCarDomain = ElementBoundaryResponse.getElementId().getDomain();
+                //elementCar = ElementBoundaryResponse;
 
-                Log.d( "CAR", elementCarDomain + ", " + elementCarId);
+
 
             }
 

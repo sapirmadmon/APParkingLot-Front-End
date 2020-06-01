@@ -17,8 +17,8 @@
             android:id="@+id/buttonExit"
             android:layout_width="37dp"
             android:layout_height="37dp"
-            android:background="#FD0606"
-            android:textColor="#FFFFFF"
+            android:background="#FFFFFF"
+            android:textColor="#EA0505"
             android:layout_gravity="top"
             android:textSize="20dp"
             android:text="X" />
@@ -69,6 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/buttonshape"
                 android:layout_gravity="center"
                 android:text="update" />
 

@@ -26,7 +26,7 @@
             android:gravity="center"
             android:paddingBottom="10dp"
             android:text="Sign Up"
-            android:textColor="#009688"
+            android:textColor="#7AA725"
             android:textSize="45sp"
             android:textStyle="bold" />
 
@@ -37,7 +37,8 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:hint="enter email" />
+            android:hint="enter email"
+            app:backgroundTint="#7AA725"/>
 
         <EditText
             android:id="@+id/editTextUserName"
@@ -46,7 +47,8 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:hint="enter user name" />
+            android:hint="enter user name"
+            app:backgroundTint="#7AA725"/>
 
         <EditText
             android:id="@+id/editTextRole"
@@ -55,7 +57,8 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:hint="enter role" />
+            android:hint="enter role"
+            app:backgroundTint="#7AA725"/>
 
         <EditText
             android:id="@+id/editTextAvatar"
@@ -64,7 +67,8 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:hint="enter avatar" />
+            android:hint="enter avatar"
+            app:backgroundTint="#7AA725"/>
 
         <EditText
             android:id="@+id/editTextCarName"
@@ -73,7 +77,8 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:hint="enter name of car" />
+            android:hint="enter name of car"
+            app:backgroundTint="#7AA725"/>
 
         <EditText
             android:id="@+id/editTextNumberCar"
@@ -82,13 +87,17 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:hint="enter number car" />
+            android:hint="enter number car"
+            app:backgroundTint="#7AA725"/>
 
         <Button
             android:id="@+id/bottomCreateUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:background="@drawable/buttonshape"
+            android:textColor="#FFFF"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:text="create user" />
 
@@ -99,9 +108,9 @@
 
             <TextView
                 android:id="@+id/textView"
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"/>
+                android:layout_height="wrap_content" />
 
         </androidx.core.widget.NestedScrollView>
 

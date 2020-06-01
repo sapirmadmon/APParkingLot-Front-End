@@ -33,4 +33,10 @@ public interface JsonPlaceHolderApi {
     Call<Void> updateElementDetails(@Path("managerDomain") String managerDomain , @Path("managerEmail") String managerEmail,
              @Path("elementDomain") String elementDomain, @Path("elementId") String elementId, @Body ElementBoundary elementBoundary);
 
+
+    @GET("elements/{userDomain}/{userEmail}/{elementDomain}/{elementId}")
+    Call<ElementBoundary> RetreiveElement(@Path("userDomain") String userDomain , @Path("userEmail") String userEmail,
+                                          @Path("elementDomain") String elementDomain, @Path("elementId") String elementId);
+
+
 }

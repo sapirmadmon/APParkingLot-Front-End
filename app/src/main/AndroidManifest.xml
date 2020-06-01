@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 <!--        <activity android:name=".LoginActivity"></activity>-->
         <activity android:name=".CreateUserActivity" />
-        <activity android:name=".ActionsAdminManagerActivity" />
+        <activity android:name=".ActionsManagerActivity" />
         <activity android:name=".MapActivity" />
 
         <meta-data

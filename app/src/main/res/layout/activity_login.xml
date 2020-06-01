@@ -13,30 +13,6 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <Button
-            android:id="@+id/buttonSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:minWidth="100dp"
-            android:text="sign up"
-            tools:layout_editor_absoluteX="148dp"
-            tools:layout_editor_absoluteY="350dp" />
-
-    </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,28 +33,19 @@
 <!--            android:id="@+id/createUser_fragment_container">-->
 <!--        </FrameLayout>-->
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="10dp"
-            android:text="APParking Lot"
-            android:textColor="#F44336"
-            android:textSize="45sp"
-            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="Login:"
-            android:textColor="#050505"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:paddingBottom="10dp"-->
+<!--            android:paddingTop="10dp"-->
+<!--            android:text="Login:"-->
+<!--            android:textColor="#050505"-->
+<!--            android:textSize="25dp"-->
+<!--            android:textStyle="bold" />-->
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -87,7 +54,8 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:hint="enter email" />
+            android:hint="enter email"
+            app:backgroundTint="#7AA725" />
 
         <EditText
             android:id="@+id/editTextDomain"
@@ -96,7 +64,9 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:text="2020b.tamir.reznik" />
+            android:text="2020b.tamir.reznik"
+            android:hint="enter domain"
+            app:backgroundTint="#7AA725" />
 
         <Button
             android:id="@+id/buttonLogin"
@@ -106,7 +76,24 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="-00dp"
             android:minWidth="100dp"
+            android:textColor="#FFFF"
+            android:textStyle="bold"
+            android:background="@drawable/buttonshape"
             android:text="login"
+            tools:layout_editor_absoluteX="148dp"
+            tools:layout_editor_absoluteY="350dp" />
+
+        <Button
+            android:id="@+id/buttonSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:text="sign up"
+            android:textColor="#FFFF"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/buttonshape"
+            android:layout_centerHorizontal="true"
             tools:layout_editor_absoluteX="148dp"
             tools:layout_editor_absoluteY="350dp" />
 

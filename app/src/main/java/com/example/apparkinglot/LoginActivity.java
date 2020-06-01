@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.apparkinglot.logic.Boundaries.Element.ElementBoundary;
 import com.example.apparkinglot.logic.Boundaries.User.UserBoundary;
 import com.example.apparkinglot.logic.Boundaries.User.UserRole;
 import com.example.apparkinglot.logic.JsonPlaceHolderApi;
@@ -61,6 +62,51 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
+
+    private void loginElement() {
+
+
+        Call<ElementBoundary> call = jsonPlaceHolderApi.RetreiveElement(domain.getText().toString() , email.getText().toString() ,
+                null , null ); //element ID & element Domain
+
+        Log.d("ERROR", email.getText().toString() + "********" + domain.getText().toString());
+
+        call.enqueue(new Callback<ElementBoundary>() {
+            @Override
+            public void onResponse(Call<ElementBoundary> call, Response<ElementBoundary> response) {
+
+                if(!response.isSuccessful()) {
+                    result.setText("code: "+ response.code() + " " + response.message());
+                    result.setTextColor(Color.RED);
+                    return;
+                }
+
+                ElementBoundary ElementBoundaryResponse = response.body();
+                String  content="";
+//                content += "code: " + response.code() + "\n";
+//                content += "domain: " + ElementBoundaryResponse.getUserId().getDomain() + "\n";
+//                content += "email: " + ElementBoundaryResponse.getUserId().getEmail() + "\n";
+//                content += "role: " + ElementBoundaryResponse.getRole() + "\n";
+//                content += "user name: " + ElementBoundaryResponse.getUsername() + "\n";
+//                content += "avatar: " + ElementBoundaryResponse.getAvatar() + "\n";
+
+                Log.d("ERROR", content);
+
+                result.setText(content);
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ElementBoundary> call, Throwable t) {
+                result.setText(t.getMessage());
+                Log.d("RR", "********************************&&&#$");
+            }
+        });
+    }
+
+
     private void login(String toString, String toString1) {
 
 
@@ -95,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    Intent intent = new Intent(LoginActivity.this, ActionsAdminManagerActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, ActionsManagerActivity.class);
                     startActivity(intent);
                 }
             }

@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,8 @@ import com.google.gson.Gson;
 
 
 import java.util.HashMap;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,7 +58,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     GoogleMap mapAPI;
     SupportMapFragment mapFragment;
-    private TextView result;
+    //private TextView result;
 
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -63,14 +67,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     String email = LoginActivity.email.getText().toString();
     String domain = LoginActivity.domain.getText().toString();
 
-    String elementId = CreateUserActivity.elementCarId;
-    String elementDomain = CreateUserActivity.elementCarDomain;
 
-    ElementBoundary elementBoundaryCar = CreateUserActivity.elementCar;
     private static double lng;
     private static double lat;
 
-    private Button bUpdate;
+    private String elementCarId;
+    private String elementCarDomain;
+
+    //private Button bUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +87,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         fetchLastLocation();
 
 
-        result = findViewById(R.id.textResult);
+       // result = findViewById(R.id.textResult);
 
-       // Log.d("TEST_LOCATION", lat + ", "+ lng); //print 0 0
 
-        Log.d("ELEMENT_CAR", "##########  " + elementBoundaryCar.getName() + "  ##########");
-        //Log.d("ELEMENT_CAR", "##########  " + elementId + " , " + elementDomain + "  ##########");
+        loadData();
+        Log.d("ELEMENT_CAR", "##########  " + elementCarId + " , " + elementCarDomain + "  ##########");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://172.16.254.101:8092/acs/")
@@ -98,14 +101,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
 
 
-        updateDetails();
 
-        bUpdate = findViewById(R.id.bottomUpdateDetails);
 
-        if (bUpdate == null)
-            Log.d("ERROR NULL", "&&&&&&&&&&&&&&&&&&&&7777");
 
-        bUpdate.setOnClickListener(new View.OnClickListener() {
+        ImageView bottomUpdate = (ImageView)findViewById(R.id.bottomUpdateDetails);
+
+        if (bottomUpdate == null)
+            Log.d("ERROR NULL", "bottomUpdate is null");
+
+        bottomUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -126,9 +130,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     }
 
-    public double getLat(double lat) { return lat; }
-    public double getLng(double lng) {
-        return lng;
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(CreateUserActivity.SHARED_PREFS, MODE_PRIVATE);
+        this.elementCarDomain = sharedPreferences.getString(CreateUserActivity.CAR_DOMAIN, "-1");
+        this.elementCarId = sharedPreferences.getString(CreateUserActivity.CAR_ID, "-1");
+
     }
 
     private void fetchLastLocation() {
@@ -150,39 +156,41 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                     lat = currentLocation.getLatitude();
                     lng = currentLocation.getLongitude();
+                    Log.d("TEST_LOCATION", lat + ", "+ lng);
 
-                    //Log.d("TEST_LOCATION", lat + ", "+ lng);
+
 
                     //calls to Actions
-                    findViewById(R.id.bottomParkAction).setOnClickListener(new View.OnClickListener() {
+                    ImageView bottomPark = (ImageView)findViewById(R.id.bottomParkAction);
+                    bottomPark.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.d("CURRENT_LOCATION", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
+                            Log.d("CURRENT_LOCATION_PARK", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
 
+                            InvokeAction("park" , lat, lng);
 
-                            InvokeAction("park");
-
-                            LatLng park = new LatLng(lat, lng);
-                            mapAPI.addMarker(new MarkerOptions().position(park).title("parking Caught ").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-                            mapAPI.moveCamera(CameraUpdateFactory.newLatLng(park));
+                            //LatLng park = new LatLng(lat, lng);
+                            //mapAPI.addMarker(new MarkerOptions().position(park).title("parking Caught ").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                            //mapAPI.moveCamera(CameraUpdateFactory.newLatLng(park));
                         }
                     });
 
-                    findViewById(R.id.bottomDepartAction).setOnClickListener(new View.OnClickListener() {
+                    ImageView bottomDepart = (ImageView)findViewById(R.id.bottomDepartAction);
+                    bottomDepart.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.d("CURRENT_LOCATION", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
-                            InvokeAction("depart");
+                            Log.d("CURRENT_LOCATION_DEPART", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
+                            InvokeAction("depart" , lat , lng);
                         }
                     });
 
-                    findViewById(R.id.bottomSearchAction).setOnClickListener(new View.OnClickListener() {
+                    ImageView bottomSearch = (ImageView)findViewById(R.id.bottomSearchAction);
+                    bottomSearch.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.d("CURRENT_LOCATION", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
+                            Log.d("CURRENT_LOCATION_SEARCH", "**********lat: " + currentLocation.getLatitude() + " lng: " + currentLocation.getLongitude() + "**********");
 
-                            InvokeAction("search");
-
+                            InvokeAction("search", lat , lng);
                         }
                     });
 
@@ -232,68 +240,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
 
-    private void updateUserRole(UserRole userRole) {
-
-        UserBoundary userUpdate = new UserBoundary(new UserIdBoundary(domain,email), userRole, null, null);
-        Call<Void> call = jsonPlaceHolderApi.updateUserDetails(domain, email, userUpdate);
-
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d("ON_RESPONSE_UPDATE", "Code:" + response.code());
-            }
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.d("onFailure", t.getMessage());
-            }
-        });
-    }
-
-    private void updateDetails() {
 
 
-        final HashMap<String, UserIdBoundary> myMap= new HashMap<>();
-        UserIdBoundary userId = new UserIdBoundary(domain, email);
-        myMap.put("userId", userId);
-
-        updateUserRole(UserRole.MANAGER);
-
-       // ElementBoundary elementUpdate = new ElementBoundary(new ElementIdBoundary(elementDomain,elementId), null, null, null, null,
-       //         new com.example.apparkinglot.logic.Boundaries.Element.Location(55.30, 22.00), null, myMap);
-
-
-        elementBoundaryCar.setLocation(new com.example.apparkinglot.logic.Boundaries.Element.Location(22.55, 33.5));
-       Call<Void> call = jsonPlaceHolderApi.updateElementDetails(domain, email, elementDomain, elementId, elementBoundaryCar);
-
-      //Log.d("UPDATE_LOCATION", lat+" , "+lng);
-
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d("ON_RESPONSE_UPD_ELEMENT", "Code:" + response.code());
-            }
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.d("onFailure", t.getMessage());
-            }
-        });
-
-       // updateUserRole(UserRole.PLAYER);
-
-    }
-
-    //NOT WORK
-    private void InvokeAction(final String getType) {
+    private void InvokeAction(final String getType, double lat, double lng) {
         Log.d("ACTION BOUNDARY", "********** Start **********");
         String type = getType;
 
         UserIdBoundary userId = new UserIdBoundary(domain, email);
         InvokingUser invokingUser = new InvokingUser(userId);
 
-        ElementIdBoundary elementIdCar = new ElementIdBoundary("2020b.tamir.reznik", "d5f140ac-1714-4fc7-af14-781757a755b7");
+        ElementIdBoundary elementIdCar = new ElementIdBoundary(elementCarDomain, elementCarId);
         ElementOfAction eoa = new ElementOfAction(elementIdCar);
 
-        ActionBoundary actionBoundary = new ActionBoundary(new ActionIdBoundary(), type, eoa, null, invokingUser, new HashMap<String, Object>());
+        Map<String, Object> actionAttributes = new HashMap<>();
+        actionAttributes.put("location" , new com.example.apparkinglot.logic.Boundaries.Element.Location(lat, lng));
+
+        ActionBoundary actionBoundary = new ActionBoundary(new ActionIdBoundary(), type, eoa,
+                null, invokingUser, actionAttributes);
 
 
         Call<Object> call = jsonPlaceHolderApi.invokeAction(actionBoundary);
@@ -330,10 +293,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 //TODO Depart
                 if(getType.equals("depart")){
                     Log.d("PARK","*********press depart*********");
-                    if(actionBoundaryResponse.equals(true))
+                    //if(actionBoundaryResponse.equals(true))
                         Toast.makeText(getApplicationContext(),getType + " successful",Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(getApplicationContext(),getType + " not succeed",Toast.LENGTH_SHORT).show();
+                   // else
+                   //     Toast.makeText(getApplicationContext(),getType + " not succeed",Toast.LENGTH_SHORT).show();
                 }
 
                 //Search
@@ -372,7 +335,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-                result.setText(t.getMessage());
+                //result.setText(t.getMessage());
                 Log.d("ON FAILURE", t.getMessage());
             }
         });
