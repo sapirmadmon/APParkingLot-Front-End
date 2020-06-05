@@ -55,6 +55,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+
+    MyURL myUrl = new MyURL();
+
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     GoogleMap mapAPI;
     SupportMapFragment mapFragment;
@@ -94,7 +97,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         Log.d("ELEMENT_CAR", "##########  " + elementCarId + " , " + elementCarDomain + "  ##########");
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.16.254.101:8092/acs/")
+                .baseUrl(myUrl.getBaseURL())
+                //.baseUrl("http://172.16.254.101:8092/acs/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
@@ -121,6 +125,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         });
 
 
+
+        ImageView buttonLogout= (ImageView)findViewById(R.id.logout);
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //        mapFragment = (SupportMapFragment) getSupportFragmentManager()
 //                .findFragmentById(R.id.mapAPI);
@@ -209,13 +222,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mapAPI = googleMap;
 
-        LatLng prak2 = new LatLng(32.114892, 34.818029);
-        mapAPI.addMarker(new MarkerOptions().position(prak2).title("parking Caught").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-        mapAPI.moveCamera(CameraUpdateFactory.newLatLng(prak2));
-
-        LatLng park3 = new LatLng(32.116430, 34.818353);
-        mapAPI.addMarker(new MarkerOptions().position(park3).title("parking Caught").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-        mapAPI.moveCamera(CameraUpdateFactory.newLatLng(park3));
+//        LatLng prak2 = new LatLng(32.114892, 34.818029);
+//        mapAPI.addMarker(new MarkerOptions().position(prak2).title("parking Caught").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+//        mapAPI.moveCamera(CameraUpdateFactory.newLatLng(prak2));
+//
+//        LatLng park3 = new LatLng(32.116430, 34.818353);
+//        mapAPI.addMarker(new MarkerOptions().position(park3).title("parking Caught").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+//        mapAPI.moveCamera(CameraUpdateFactory.newLatLng(park3));
 
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
@@ -285,7 +298,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 if(getType.equals("park")){
                     Log.d("PARK","*********press park*********");
                    // if(actionBoundaryResponse.equals(Boolean.TRUE))
+                    if(actionBoundaryResponse != null)
                         Toast.makeText(getApplicationContext(),getType + " successful",Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getApplicationContext(),getType + "not successful",Toast.LENGTH_SHORT).show();
                    // else
                    //     Toast.makeText(getApplicationContext(),getType + " not succeed",Toast.LENGTH_SHORT).show();
                 }
@@ -293,14 +309,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 //TODO Depart
                 if(getType.equals("depart")){
                     Log.d("PARK","*********press depart*********");
-                    //if(actionBoundaryResponse.equals(true))
+//                    if(actionBoundaryResponse.equals(false))
+//                        Toast.makeText(getApplicationContext(),getType + " not succeed",Toast.LENGTH_SHORT).show();
+//                    else
+                    if(actionBoundaryResponse != null)
                         Toast.makeText(getApplicationContext(),getType + " successful",Toast.LENGTH_SHORT).show();
-                   // else
-                   //     Toast.makeText(getApplicationContext(),getType + " not succeed",Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getApplicationContext(),getType + "not successful",Toast.LENGTH_SHORT).show();
                 }
 
                 //Search
                 if(getType.equals("search")) {
+
+                    mapAPI.clear();
+                    onMapReady(mapAPI);
 
                     Gson gson = new Gson();
                     gson.toJson(actionBoundaryResponse);
@@ -316,7 +338,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                         if(eb.getType().equals("parking_lot")) {
                             LatLng park = new LatLng(eb.getLocation().getLat(), eb.getLocation().getLng());
-                            mapAPI.addMarker(new MarkerOptions().position(park).title("parking").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                            mapAPI.addMarker(new MarkerOptions().position(park).title("parking lot").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
                             mapAPI.moveCamera(CameraUpdateFactory.newLatLng(park));
                         }
                         else { //type is parking

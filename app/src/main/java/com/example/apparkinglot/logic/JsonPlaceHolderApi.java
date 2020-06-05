@@ -39,4 +39,11 @@ public interface JsonPlaceHolderApi {
                                           @Path("elementDomain") String elementDomain, @Path("elementId") String elementId);
 
 
+    @GET("elements/{userDomain}/{userEmail}")
+    Call<ElementBoundary[]> RetreiveElementArr (@Path("userDomain") String userDomain , @Path("userEmail") String userEmail);
+
+    @GET("elements/{userDomain}/{userEmail}/search/byType/{type}")
+    Call<ElementBoundary[]> getElementsByType (@Path("userDomain") String userDomain , @Path("userEmail") String userEmail,
+                                               @Path("type") String type);
+
 }

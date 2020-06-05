@@ -7,7 +7,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,13 +34,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CreateUserActivity extends AppCompatActivity {
+public class CreateUserActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+
+    MyURL myUrl = new MyURL();
 
     private TextView textViewResult;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
 
     private String elementCarId;
     private String elementCarDomain;
+    boolean flagCreateCar = false;
     //public static ElementBoundary elementCar;
 
     public static final String SHARED_PREFS = "SharedPrefs";
@@ -49,10 +55,11 @@ public class CreateUserActivity extends AppCompatActivity {
     private EditText email;
     private EditText username;
     private EditText avatar;
-    private EditText role;
+    //private EditText role;
     private EditText numberCar;
     private EditText nameCar;
-
+    private Spinner spinnerRole;
+    private String role;
 
 
 
@@ -61,11 +68,17 @@ public class CreateUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
 
+        numberCar = findViewById(R.id.editTextNumberCar);
+        nameCar = findViewById(R.id.editTextCarName);
 
-        textViewResult = findViewById(R.id.textView);
+      //  textViewResult = findViewById(R.id.textView);
+        spinner();
+
+
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.16.254.101:8092/acs/")
+                .baseUrl(myUrl.getBaseURL())
+                //.baseUrl("http://172.16.254.101:8092/acs/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
@@ -83,7 +96,34 @@ public class CreateUserActivity extends AppCompatActivity {
         });
     }
 
+    private void spinner() {
+        spinnerRole = (Spinner)findViewById(R.id.SpinnerRole);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.roles, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRole.setAdapter(adapter);
+        spinnerRole.setOnItemSelectedListener(this);
+    }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        role = parent.getItemAtPosition(position).toString();
+        if(role.equals(UserRole.MANAGER.name())) {
+            numberCar.setVisibility(View.INVISIBLE);
+            nameCar.setVisibility(View.INVISIBLE);
+        }
+        else if(role.equals(UserRole.PLAYER.name())) {
+            numberCar.setVisibility(View.VISIBLE);
+            nameCar.setVisibility(View.VISIBLE);
+        }
+
+        Log.d("ROLE SPINNER" , role);
+;    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 
     public void saveData(String domainCar , String idCar) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
@@ -107,16 +147,22 @@ public class CreateUserActivity extends AppCompatActivity {
 
         email = findViewById(R.id.editTextEmail);
         username = findViewById(R.id.editTextUserName);
-        role = findViewById(R.id.editTextRole);
+        //role = findViewById(R.id.editTextRole);
         avatar = findViewById(R.id.editTextAvatar);
-        UserRole userRole = UserRole.ADMIN;
+        UserRole userRole = null;
+        Log.d("******ROLE*******" , role);
 
-        if(role.getText().toString().equals(UserRole.PLAYER.name()))
+        if(role.equals(UserRole.PLAYER.name()))
             userRole = UserRole.PLAYER;
-        if(role.getText().toString().equals(UserRole.ADMIN.name()))
-            userRole = UserRole.ADMIN;
-        if(role.getText().toString().equals(UserRole.MANAGER.name()))
+        if(role.equals(UserRole.MANAGER.name()))
             userRole = UserRole.MANAGER;
+
+//        if(role.getText().toString().equals(UserRole.PLAYER.name()))
+//            userRole = UserRole.PLAYER;
+//        if(role.getText().toString().equals(UserRole.ADMIN.name()))
+//            userRole = UserRole.ADMIN;
+//        if(role.getText().toString().equals(UserRole.MANAGER.name()))
+//            userRole = UserRole.MANAGER;
         //TODO exception if null
         //if(role.equals(null))
         //
@@ -153,6 +199,7 @@ public class CreateUserActivity extends AppCompatActivity {
 
         if(newUser.getRole().equals(UserRole.PLAYER)) {
             newUser.setRole(UserRole.MANAGER);
+            flagCreateCar = true;
         }
         Call<UserBoundary> call = jsonPlaceHolderApi.CreateNewUser(newUser);
 
@@ -162,7 +209,7 @@ public class CreateUserActivity extends AppCompatActivity {
             public void onResponse(Call<UserBoundary> call, Response<UserBoundary> response) {
 
                 if (!response.isSuccessful()) {
-                    textViewResult.setText("code: " + response.code());
+                 //   textViewResult.setText("code: " + response.code());
                     return;
                 }
 
@@ -175,29 +222,28 @@ public class CreateUserActivity extends AppCompatActivity {
                 content += "user name: " + UserBoundaryResponse.getUsername() + "\n";
                 content += "avatar: " + UserBoundaryResponse.getAvatar() + "\n";
 
-                textViewResult.setText(content);
+               // textViewResult.setText(content);
 
                 //if(UserBoundaryResponse.getRole().equals(UserRole.PLAYER)) {
 
-                    // TODO (Player->manager) -> craete Element car -> (manager->player)
                     //player -> manager
                     //UserBoundaryResponse.setRole(UserRole.MANAGER);
                     //updateUserRole(UserBoundaryResponse.getUserId().getDomain(), UserBoundaryResponse.getUserId().getEmail(),UserBoundaryResponse);
 
-                    //TODO - Not Work to call this method
+
+                if(flagCreateCar == true) {
                     createCarElement(UserBoundaryResponse.getUserId().getDomain(), UserBoundaryResponse.getUserId().getEmail());
 
-                    //TODO - Not Work manager -> player
-                   UserBoundaryResponse.setRole(UserRole.PLAYER);
-                   updateUserRole(UserBoundaryResponse.getUserId().getDomain(), UserBoundaryResponse.getUserId().getEmail(),UserBoundaryResponse);
-
+                    UserBoundaryResponse.setRole(UserRole.PLAYER);
+                    updateUserRole(UserBoundaryResponse.getUserId().getDomain(), UserBoundaryResponse.getUserId().getEmail(), UserBoundaryResponse);
+                }
               //  }
 
             }
 
             @Override
             public void onFailure(Call<UserBoundary> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
+                //textViewResult.setText(t.getMessage());
             }
         });
     }
@@ -206,8 +252,8 @@ public class CreateUserActivity extends AppCompatActivity {
     private void createCarElement(String domain, String email) {
         String type = "car";
 
-        numberCar = findViewById(R.id.editTextNumberCar);
-        nameCar = findViewById(R.id.editTextCarName);
+        //numberCar = findViewById(R.id.editTextNumberCar);
+        //nameCar = findViewById(R.id.editTextCarName);
 
 
         final HashMap<String, UserIdBoundary> myMap= new HashMap<>();
@@ -243,7 +289,7 @@ public class CreateUserActivity extends AppCompatActivity {
                 ElementBoundary ElementBoundaryResponse = response.body();
 
                 saveData(ElementBoundaryResponse.getElementId().getDomain(), ElementBoundaryResponse.getElementId().getId());
-                Log.d( "SAVECAR", elementCarDomain + ", " + elementCarId);
+                Log.d( "SAVE_CAR", elementCarDomain + ", " + elementCarId);
 
                 String content = "";
                 content += "code: " + response.code() + "\n";
@@ -267,12 +313,6 @@ public class CreateUserActivity extends AppCompatActivity {
                 Log.d("ELEMENT CAR BOUNDARY", "******************"+content);
                 //result.setText(content);
 
-                //elementCarId = ElementBoundaryResponse.getElementId().getId();
-                //elementCarDomain = ElementBoundaryResponse.getElementId().getDomain();
-                //elementCar = ElementBoundaryResponse;
-
-
-
             }
 
 
@@ -283,4 +323,9 @@ public class CreateUserActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+
 }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="3dp"
+    android:weightSum="1"
+    tools:context=".ManagerActivity">
+
+    <ImageView
+        android:id="@+id/logout"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/logout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/buttonGetAllElements"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/buttonshape"
+            android:paddingLeft="5dp"
+            android:text="get elements"
+            android:textColor="#116F81"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonCreateParkingLot"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="Create parking lot"
+            android:textColor="#116F81"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonUpdateDetailsManager"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="update details"
+            android:textColor="#116F81"
+            android:textStyle="bold" />
+
+<!--        <Button-->
+<!--            android:id="@+id/buttonSearchElement"-->
+<!--            android:layout_width="96dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:background="@drawable/buttonshape"-->
+<!--            android:paddingRight="5dp"-->
+<!--            android:text="Search Element"-->
+<!--            android:textColor="#116F81"-->
+<!--            android:textStyle="bold" />-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/containerM"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.9"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+</LinearLayout>

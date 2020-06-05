@@ -23,6 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
+    MyURL myUrl = new MyURL();
+
     public static EditText email;
     public static EditText domain;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
@@ -37,7 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         domain =findViewById(R.id.editTextDomain);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.16.254.101:8092/acs/")
+                .baseUrl(myUrl.getBaseURL())
+                //.baseUrl("http://172.16.254.101:8092/acs/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
@@ -126,13 +129,13 @@ public class LoginActivity extends AppCompatActivity {
                 UserBoundary UserBoundaryResponse = response.body();
                 String  content="";
                 content += "code: " + response.code() + "\n";
-                content += "domain: " + UserBoundaryResponse.getUserId().getDomain() + "\n";
-                content += "email: " + UserBoundaryResponse.getUserId().getEmail() + "\n";
-                content += "role: " + UserBoundaryResponse.getRole() + "\n";
-                content += "user name: " + UserBoundaryResponse.getUsername() + "\n";
-                content += "avatar: " + UserBoundaryResponse.getAvatar() + "\n";
+//                content += "domain: " + UserBoundaryResponse.getUserId().getDomain() + "\n";
+//                content += "email: " + UserBoundaryResponse.getUserId().getEmail() + "\n";
+//                content += "role: " + UserBoundaryResponse.getRole() + "\n";
+//                content += "user name: " + UserBoundaryResponse.getUsername() + "\n";
+//                content += "avatar: " + UserBoundaryResponse.getAvatar() + "\n";
 
-                Log.d("ERROR", content);
+                Log.d("CONTENT", content);
 
                 result.setText(content);
 
@@ -141,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    Intent intent = new Intent(LoginActivity.this, ActionsManagerActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, ManagerActivity.class);
                     startActivity(intent);
                 }
             }
@@ -149,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UserBoundary> call, Throwable t) {
                 result.setText(t.getMessage());
-                Log.d("RR", "********************************&&&#$");
+                Log.d("ERROR", "on Failure");
             }
         });
     }

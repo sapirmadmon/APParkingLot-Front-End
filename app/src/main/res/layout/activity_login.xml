@@ -7,17 +7,20 @@
     tools:context=".LoginActivity">
 
     <ImageView
-        android:src="@drawable/parkinglot"
+        android:src="@drawable/main_background1"
         android:id="@+id/im1"
         android:scaleType="fitXY"
+        android:foregroundGravity="center"
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="30dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -26,26 +29,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-<!--        <FrameLayout-->
-<!--            android:layout_width="352dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_weight="0.5"-->
-<!--            android:id="@+id/createUser_fragment_container">-->
-<!--        </FrameLayout>-->
+        <!--        <FrameLayout-->
+        <!--            android:layout_width="352dp"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:layout_weight="0.5"-->
+        <!--            android:id="@+id/createUser_fragment_container">-->
+        <!--        </FrameLayout>-->
 
 
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center"-->
-<!--            android:paddingBottom="10dp"-->
-<!--            android:paddingTop="10dp"-->
-<!--            android:text="Login:"-->
-<!--            android:textColor="#050505"-->
-<!--            android:textSize="25dp"-->
-<!--            android:textStyle="bold" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/textView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:gravity="center"-->
+        <!--            android:paddingBottom="10dp"-->
+        <!--            android:paddingTop="10dp"-->
+        <!--            android:text="Login:"-->
+        <!--            android:textColor="#050505"-->
+        <!--            android:textSize="25dp"-->
+        <!--            android:textStyle="bold" />-->
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -53,9 +55,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
-            android:inputType="textPersonName"
             android:hint="enter email"
-            app:backgroundTint="#7AA725" />
+            app:backgroundTint="#116F81" />
 
         <EditText
             android:id="@+id/editTextDomain"
@@ -63,10 +64,11 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
-            android:inputType="textPersonName"
-            android:text="2020b.tamir.reznik"
             android:hint="enter domain"
-            app:backgroundTint="#7AA725" />
+            app:backgroundTint="#116F81" />
+
+<!--        android:text="2020b.tamir.reznik"-->
+
 
         <Button
             android:id="@+id/buttonLogin"
@@ -75,11 +77,11 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="-00dp"
-            android:minWidth="100dp"
-            android:textColor="#FFFF"
-            android:textStyle="bold"
             android:background="@drawable/buttonshape"
+            android:minWidth="100dp"
             android:text="login"
+            android:textColor="#116F81"
+            android:textStyle="bold"
             tools:layout_editor_absoluteX="148dp"
             tools:layout_editor_absoluteY="350dp" />
 
@@ -87,13 +89,13 @@
             android:id="@+id/buttonSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buttonshape"
             android:minWidth="100dp"
             android:text="sign up"
-            android:textColor="#FFFF"
+            android:textColor="#116F81"
             android:textStyle="bold"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/buttonshape"
-            android:layout_centerHorizontal="true"
             tools:layout_editor_absoluteX="148dp"
             tools:layout_editor_absoluteY="350dp" />
 
@@ -105,7 +107,7 @@
                 android:id="@+id/textViewRes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"/>
+                android:gravity="center" />
 
         </androidx.core.widget.NestedScrollView>
 

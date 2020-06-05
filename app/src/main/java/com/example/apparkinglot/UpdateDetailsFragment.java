@@ -32,6 +32,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class UpdateDetailsFragment extends Fragment {
 
+    MyURL myUrl = new MyURL();
+
     private EditText updateUserName;
     private EditText updateRole;
     private EditText updateAvatar;
@@ -56,7 +58,8 @@ public class UpdateDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_update_details, container, false);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.16.254.101:8092/acs/")
+                .baseUrl(myUrl.getBaseURL())
+                //.baseUrl("http://172.16.254.101:8092/acs/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
