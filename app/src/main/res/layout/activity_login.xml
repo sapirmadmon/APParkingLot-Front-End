@@ -29,25 +29,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <!--        <FrameLayout-->
-        <!--            android:layout_width="352dp"-->
-        <!--            android:layout_height="0dp"-->
-        <!--            android:layout_weight="0.5"-->
-        <!--            android:id="@+id/createUser_fragment_container">-->
-        <!--        </FrameLayout>-->
-
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/textView"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:gravity="center"-->
-        <!--            android:paddingBottom="10dp"-->
-        <!--            android:paddingTop="10dp"-->
-        <!--            android:text="Login:"-->
-        <!--            android:textColor="#050505"-->
-        <!--            android:textSize="25dp"-->
-        <!--            android:textStyle="bold" />-->
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -66,8 +47,6 @@
             android:gravity="center"
             android:hint="enter domain"
             app:backgroundTint="#116F81" />
-
-<!--        android:text="2020b.tamir.reznik"-->
 
 
         <Button

@@ -38,7 +38,6 @@ public class UpdateDetailsFragment extends Fragment {
     private EditText updateRole;
     private EditText updateAvatar;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
-  //  private TextView textViewResult;
 
     String email = LoginActivity.email.getText().toString();
     String domain = LoginActivity.domain.getText().toString();
@@ -93,7 +92,6 @@ public class UpdateDetailsFragment extends Fragment {
         return view;
     }
 
-    //private void updateDetails(String userDomain, String userEmail)
     private void updateDetails() {
 
         updateUserName = getView().findViewById(R.id.editTextUpdateUserName);

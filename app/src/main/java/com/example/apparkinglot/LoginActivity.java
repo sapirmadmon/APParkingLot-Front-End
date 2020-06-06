@@ -51,8 +51,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 login(domain.getText().toString(), email.getText().toString());
 
-             //  Intent intent = new Intent(LoginActivity.this, VolleyTutorialActivity.class);
-             //   startActivity(intent);
             }
         });
 
@@ -87,12 +85,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 ElementBoundary ElementBoundaryResponse = response.body();
                 String  content="";
-//                content += "code: " + response.code() + "\n";
-//                content += "domain: " + ElementBoundaryResponse.getUserId().getDomain() + "\n";
-//                content += "email: " + ElementBoundaryResponse.getUserId().getEmail() + "\n";
-//                content += "role: " + ElementBoundaryResponse.getRole() + "\n";
-//                content += "user name: " + ElementBoundaryResponse.getUsername() + "\n";
-//                content += "avatar: " + ElementBoundaryResponse.getAvatar() + "\n";
 
                 Log.d("ERROR", content);
 
@@ -129,11 +121,6 @@ public class LoginActivity extends AppCompatActivity {
                 UserBoundary UserBoundaryResponse = response.body();
                 String  content="";
                 content += "code: " + response.code() + "\n";
-//                content += "domain: " + UserBoundaryResponse.getUserId().getDomain() + "\n";
-//                content += "email: " + UserBoundaryResponse.getUserId().getEmail() + "\n";
-//                content += "role: " + UserBoundaryResponse.getRole() + "\n";
-//                content += "user name: " + UserBoundaryResponse.getUsername() + "\n";
-//                content += "avatar: " + UserBoundaryResponse.getAvatar() + "\n";
 
                 Log.d("CONTENT", content);
 

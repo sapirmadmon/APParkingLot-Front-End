@@ -2,53 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="3dp"
-    tools:context=".MapActivity"
     android:orientation="vertical"
+    android:padding="3dp"
     android:weightSum="1"
-    android:id="@+id/container1">
+    tools:context=".MapActivity">
 
-    <ImageView
-        android:id="@+id/logout"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginBottom="5dp"
-        android:src="@drawable/logout"/>
-
-    <fragment
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:id="@+id/mapAPI"
-        android:layout_weight="0.8"
-        android:name="com.google.android.gms.maps.SupportMapFragment">
-    </fragment>
+        android:layout_height="461dp"
+        android:layout_weight="0.9"
+        android:padding="5dp">
 
-    <!--    <FrameLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_weight="0.3">-->
+        <fragment
+            android:id="@+id/mapAPI"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </fragment>
+
+        <ImageView
+            android:id="@+id/logout"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/logout" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="282dp"
-        android:layout_height="12dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="0.2"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.1"
         android:orientation="horizontal">
 
-        <!--        <ImageButton-->
-        <!--            android:id="@+id/bottomDepartAction"-->
-        <!--            android:layout_width="60dp"-->
-        <!--            android:layout_height="60dp"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginLeft="15dp"-->
-        <!--            android:layout_marginRight="15dp"-->
-        <!--            android:background="#FFFF"-->
-        <!--            android:scaleType="fitXY"-->
-        <!--            app:srcCompat="@drawable/no_parking_but"/>-->
 
         <ImageView
             android:id="@+id/bottomDepartAction"
@@ -56,7 +47,7 @@
             android:layout_height="40dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:src="@drawable/no_parking_but"/>
+            android:src="@drawable/no_parking_but" />
 
         <ImageView
             android:id="@+id/bottomParkAction"
@@ -82,56 +73,7 @@
             android:layout_marginRight="15dp"
             android:src="@drawable/person_but" />
 
-        <!--        <ImageButton-->
-        <!--            android:id="@+id/bottomParkAction"-->
-        <!--            android:layout_width="60dp"-->
-        <!--            android:layout_height="60dp"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginLeft="15dp"-->
-        <!--            android:layout_alignParentBottom="true"-->
-        <!--            android:layout_marginRight="15dp"-->
-        <!--            android:background="#FFFF"-->
-        <!--            android:scaleType="fitXY"-->
-        <!--            app:srcCompat="@drawable/park_but"/>-->
-
-        <!--        <ImageButton-->
-        <!--            android:id="@+id/bottomSearchAction"-->
-        <!--            android:layout_width="60dp"-->
-        <!--            android:layout_height="60dp"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_alignParentBottom="true"-->
-        <!--            android:layout_marginLeft="15dp"-->
-        <!--            android:layout_marginRight="15dp"-->
-        <!--            android:background="#FFFF"-->
-        <!--            android:scaleType="fitXY"-->
-        <!--            app:srcCompat="@drawable/search_but" />-->
-
-        <!--        <ImageButton-->
-        <!--            android:id="@+id/bottomUpdateDetails"-->
-        <!--            android:layout_width="60dp"-->
-        <!--            android:layout_height="60dp"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_alignParentBottom="true"-->
-        <!--            android:layout_marginLeft="15dp"-->
-        <!--            android:layout_marginRight="15dp"-->
-        <!--            android:background="#FFFF"-->
-        <!--            android:scaleType="fitXY"-->
-        <!--            app:srcCompat="@drawable/person_but" />-->
-
-        <!--        <androidx.core.widget.NestedScrollView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content">-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/textResult"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:background="#FFFFFF"/>-->
-
-        <!--        </androidx.core.widget.NestedScrollView>-->
-
     </LinearLayout>
-    <!--    </FrameLayout>-->
 
 
 </LinearLayout>

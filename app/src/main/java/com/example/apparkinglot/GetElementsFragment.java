@@ -163,11 +163,6 @@ public class GetElementsFragment extends Fragment {
                 ElementBoundary[] ElementArrBoundaryResponse = response.body();
 
                 Gson gson = new Gson();
-//                gson.toJson(ElementArrBoundaryResponse);
-//
-//                ElementBoundary elements[] = null;
-//                elements = gson.fromJson(gson.toJson(ElementArrBoundaryResponse), ElementBoundary[].class);
-//                Log.d("ELEMENTS", elements[0].getName());
 
                 String content = "";
                 content += "code: " + response.code() + "\n";

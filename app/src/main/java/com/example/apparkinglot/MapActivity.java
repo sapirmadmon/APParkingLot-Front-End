@@ -61,7 +61,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     GoogleMap mapAPI;
     SupportMapFragment mapFragment;
-    //private TextView result;
 
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -77,7 +76,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private String elementCarId;
     private String elementCarDomain;
 
-    //private Button bUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +87,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
 
-
-       // result = findViewById(R.id.textResult);
 
 
         loadData();
@@ -135,11 +131,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
 
-        //        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.mapAPI);
-//
-//        mapFragment.getMapAsync(this);
-
 
     }
 
@@ -182,9 +173,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                             InvokeAction("park" , lat, lng);
 
-                            //LatLng park = new LatLng(lat, lng);
-                            //mapAPI.addMarker(new MarkerOptions().position(park).title("parking Caught ").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-                            //mapAPI.moveCamera(CameraUpdateFactory.newLatLng(park));
                         }
                     });
 
@@ -222,13 +210,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mapAPI = googleMap;
 
-//        LatLng prak2 = new LatLng(32.114892, 34.818029);
-//        mapAPI.addMarker(new MarkerOptions().position(prak2).title("parking Caught").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-//        mapAPI.moveCamera(CameraUpdateFactory.newLatLng(prak2));
-//
-//        LatLng park3 = new LatLng(32.116430, 34.818353);
-//        mapAPI.addMarker(new MarkerOptions().position(park3).title("parking Caught").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-//        mapAPI.moveCamera(CameraUpdateFactory.newLatLng(park3));
 
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
@@ -284,7 +265,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
 
                 if (!response.isSuccessful()) {
-                    //result.setText("code: " + response.code());
                     Log.d("CODE", response.code()+""+response.errorBody());
                     return;
                 }
@@ -302,16 +282,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                         Toast.makeText(getApplicationContext(),getType + " successful",Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(getApplicationContext(),getType + "not successful",Toast.LENGTH_SHORT).show();
-                   // else
-                   //     Toast.makeText(getApplicationContext(),getType + " not succeed",Toast.LENGTH_SHORT).show();
+
                 }
 
                 //TODO Depart
                 if(getType.equals("depart")){
                     Log.d("PARK","*********press depart*********");
-//                    if(actionBoundaryResponse.equals(false))
-//                        Toast.makeText(getApplicationContext(),getType + " not succeed",Toast.LENGTH_SHORT).show();
-//                    else
+
                     if(actionBoundaryResponse != null)
                         Toast.makeText(getApplicationContext(),getType + " successful",Toast.LENGTH_SHORT).show();
                     else
@@ -329,9 +306,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                     ElementBoundary elements [] = null;
                     elements = gson.fromJson(gson.toJson(actionBoundaryResponse),ElementBoundary[].class);
-                  //  Log.d("ELEMENTS", elements[0].getName());
-                  //  Log.d("ELEMENTS", elements[1].getName());
-
 
                     for (ElementBoundary eb : elements) {
                         Log.d("LOCATION", eb.getLocation().getLat().toString() + " , " + eb.getLocation().getLng().toString());

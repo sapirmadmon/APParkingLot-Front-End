@@ -29,9 +29,9 @@ public interface JsonPlaceHolderApi {
     @POST("actions")
     Call<Object> invokeAction(@Body ActionBoundary actionBoundary);
 
-    @PUT("elements/{managerDomain}/{managerEmail}/{elementDomain}/{elementId}")
-    Call<Void> updateElementDetails(@Path("managerDomain") String managerDomain , @Path("managerEmail") String managerEmail,
-             @Path("elementDomain") String elementDomain, @Path("elementId") String elementId, @Body ElementBoundary elementBoundary);
+//    @PUT("elements/{managerDomain}/{managerEmail}/{elementDomain}/{elementId}")
+//    Call<Void> updateElementDetails(@Path("managerDomain") String managerDomain , @Path("managerEmail") String managerEmail,
+//             @Path("elementDomain") String elementDomain, @Path("elementId") String elementId, @Body ElementBoundary elementBoundary);
 
 
     @GET("elements/{userDomain}/{userEmail}/{elementDomain}/{elementId}")

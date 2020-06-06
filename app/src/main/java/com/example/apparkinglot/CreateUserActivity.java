@@ -157,17 +157,6 @@ public class CreateUserActivity extends AppCompatActivity implements AdapterView
         if(role.equals(UserRole.MANAGER.name()))
             userRole = UserRole.MANAGER;
 
-//        if(role.getText().toString().equals(UserRole.PLAYER.name()))
-//            userRole = UserRole.PLAYER;
-//        if(role.getText().toString().equals(UserRole.ADMIN.name()))
-//            userRole = UserRole.ADMIN;
-//        if(role.getText().toString().equals(UserRole.MANAGER.name()))
-//            userRole = UserRole.MANAGER;
-        //TODO exception if null
-        //if(role.equals(null))
-        //
-
-        // NewUserDetailsBoundary newUser = new NewUserDetailsBoundary("email@gmail.com", UserRole.PLAYER, "username","avatar");
         NewUserDetailsBoundary newUser = new NewUserDetailsBoundary(email.getText().toString(), userRole, username.getText().toString() ,avatar.getText().toString());
 
         Log.d("ERROR", email.getText().toString() +"*****" + userRole +"****"+ username.getText().toString() + "****" + avatar.getText().toString());
@@ -222,14 +211,6 @@ public class CreateUserActivity extends AppCompatActivity implements AdapterView
                 content += "user name: " + UserBoundaryResponse.getUsername() + "\n";
                 content += "avatar: " + UserBoundaryResponse.getAvatar() + "\n";
 
-               // textViewResult.setText(content);
-
-                //if(UserBoundaryResponse.getRole().equals(UserRole.PLAYER)) {
-
-                    //player -> manager
-                    //UserBoundaryResponse.setRole(UserRole.MANAGER);
-                    //updateUserRole(UserBoundaryResponse.getUserId().getDomain(), UserBoundaryResponse.getUserId().getEmail(),UserBoundaryResponse);
-
 
                 if(flagCreateCar == true) {
                     createCarElement(UserBoundaryResponse.getUserId().getDomain(), UserBoundaryResponse.getUserId().getEmail());
@@ -252,20 +233,10 @@ public class CreateUserActivity extends AppCompatActivity implements AdapterView
     private void createCarElement(String domain, String email) {
         String type = "car";
 
-        //numberCar = findViewById(R.id.editTextNumberCar);
-        //nameCar = findViewById(R.id.editTextCarName);
-
-
         final HashMap<String, UserIdBoundary> myMap= new HashMap<>();
         UserIdBoundary userId = new UserIdBoundary(domain, email);
         myMap.put("userId", userId);
 
-
-        //UserBoundary ub = new UserBoundary(userId, UserRole.MANAGER,null, null);
-        //updateUserRole(domain, email, ub);
-
-
-        //Log.d("ROLE TEST UPDATE", ub.getRole().toString());
 
         final HashMap<String, Object> myMapElementsAttributes= new HashMap<>();
         myMapElementsAttributes.put("car_id", numberCar.getText().toString());
