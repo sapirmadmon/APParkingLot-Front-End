@@ -9,9 +9,9 @@ Retrofit and Google Maps API are used.
 ## Screenshots
 
 <p float="left">
-  <img src="docc/login.png" width="100" />
-  <img src="docc/signup.png" width="100" /> 
-  <img src="docc/map.png" width="100" />
+  <img src="docc/login.png" alt="login"</img>
+  <img src="docc/signup.png" alt="sign up"</img>
+  <img src="docc/map.png" alt="map"</img>
 </p>
 
 
