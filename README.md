@@ -23,8 +23,8 @@ Player Actions:
 		</tr>
 		<tr>
 			<td><b><b>Search parking</b></b></td>
-			<td>Search parking and parking-lots availables in the user's current area by a predetermined range. 
-				Parking - green marking.
+			<td>Search parking and parking-lots availables in the user's current area by a predetermined range.\n
+				Parking - green marking.\n
 				Parking lot - blue marking.</td>
 		</tr>
 		<tr>
