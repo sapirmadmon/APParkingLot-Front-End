@@ -23,8 +23,8 @@ Player Actions:
 		</tr>
 		<tr>
 			<td><b><b>Search parking</b></b></td>
-			<td>Search parking and parking-lots availables in the user's current area by a predetermined range.\n
-				Parking - green marking.\n
+			<td>Search parking and parking-lots availables in the user's current area by a predetermined range.<br>
+				Parking - green marking.<br>
 				Parking lot - blue marking.</td>
 		</tr>
 		<tr>
@@ -42,7 +42,9 @@ Player Actions:
 </table>
 
 Manager Actions: 
-
+*Adding car parks.
+*update personal details.
+*Search for cars of users, parkings, parking lots.
 
 ## Screenshots
 
