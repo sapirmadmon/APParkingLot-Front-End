@@ -41,10 +41,10 @@ Player Actions:
 		</tr>
 </table>
 
-Manager Actions: 
-*Adding car parks.
-*update personal details.
-*Search for cars of users, parkings, parking lots.
+Manager Actions: <br>
+*Adding car parks.<br>
+*update personal details.<br>
+*Search for cars of users, parkings, parking lots.<br>
 
 ## Screenshots
 
