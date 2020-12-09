@@ -8,13 +8,15 @@ Retrofit and Google Maps API are used.
 
 ## Screenshots
 
-<div>
-  <img src="docc/login.png" alt="Login"</img>      
+<div class="row">
+  <div class="column">
+     <img src="docc/login.png" alt="Login"</img>  
+  </div>
+  <div class="column">
+     <img src="docc/signup.png" alt="Sign Up"</img> 
+  </div>
+  <div class="column">
+     <img src="docc/map.png" alt="Map"</img> 
+  </div>
 </div>
-
-<div>
-  <img src="docc/signup.png" alt="Sign Up"</img>      
-</div>
-
-
 
