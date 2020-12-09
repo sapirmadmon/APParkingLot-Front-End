@@ -8,7 +8,7 @@ Retrofit and Google Maps API are used.
 
 ## Actions in APParkingLot
 
-### Player Actions: 
+#### Player Actions: 
 
 <table>
     <th>Action</th>
@@ -41,7 +41,7 @@ Retrofit and Google Maps API are used.
 		</tr>
 </table>
 
-### Manager Actions: 
+#### Manager Actions: 
 *Adding parking lots.<br>
 *update personal details.<br>
 *Search for cars of users, parkings, parking lots.<br>
