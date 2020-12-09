@@ -12,7 +12,9 @@ Retrofit and Google Maps API are used.
   <img src="docc/login.png" alt="Login"</img>      
 </div>
 
-
+<div>
+  <img src="docc/signup.png" alt="Sign Up"</img>      
+</div>
 
 
 
