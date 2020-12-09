@@ -42,7 +42,7 @@ Retrofit and Google Maps API are used.
 </table>
 
 ### Manager Actions: 
-*Adding car parks.<br>
+*Adding parking lots.<br>
 *update personal details.<br>
 *Search for cars of users, parkings, parking lots.<br>
 
