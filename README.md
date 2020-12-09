@@ -6,6 +6,12 @@ APParking Lot is a social application that allows users to share data about park
 Retrofit and Google Maps API are used.
 
 
+## Screenshots
+
+<div>
+  <img src="docc/login.png" alt="Login"</img>      
+</div>
+
 
 
 
