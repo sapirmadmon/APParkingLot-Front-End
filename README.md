@@ -8,8 +8,8 @@ Retrofit and Google Maps API are used.
 
 ## Screenshots
 
-<div class="row">
-  <div class="column">
+<p float="left">
+  <div>
      <img src="docc/login.png" alt="Login"</img>  
   </div>
   <div class="column">
@@ -18,5 +18,6 @@ Retrofit and Google Maps API are used.
   <div class="column">
      <img src="docc/map.png" alt="Map"</img> 
   </div>
-</div>
+</p>
+
 
