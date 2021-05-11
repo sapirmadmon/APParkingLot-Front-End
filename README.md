@@ -49,7 +49,7 @@ Retrofit and Google Maps API are used.
 
 ## Screenshots
 
-<p float="left">
+<p float="center">
   <img src="docc/login.png" height="500" alt="login"</img>
   <img src="docc/signup.jpg" height="500" alt="sign up"</img>
   <img src="docc/map.png" height="500" alt="map"</img>
